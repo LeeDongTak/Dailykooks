@@ -12,9 +12,12 @@ function Home() {
     // 지도의 초기 위치
     center: { lat: 37.49676871972202, lng: 127.02474726969814 },
     // 지도 위치 변경시 panto를 이용할지(부드럽게 이동)
-    isPanto: true
+    isPanto: true,
+    markerData: null
   });
   const [searchAddress, SetSearchAddress] = useState();
+
+  const [isOpen, setIsOpen] = useState(false);
 
   // 키워드 입력후 검색 클릭 시 원하는 키워드의 주소로 이동
   const SearchMap = () => {
@@ -23,14 +26,15 @@ function Home() {
       if (status === kakao.maps.services.Status.OK) {
         const newSearch = data[0];
         setState({
-          center: { lat: newSearch.y, lng: newSearch.x }
+          center: { lat: newSearch.y, lng: newSearch.x },
+          markerData: newSearch
         });
         console.log(newSearch);
       }
     };
     ps.keywordSearch(`${searchAddress}`, placesSearchCB);
   };
-
+  // console.log(state.markerData.place_name);
   const handleSearchAddress = (e) => {
     SetSearchAddress(e.target.value);
   };
@@ -47,7 +51,19 @@ function Home() {
         }}
         level={3} // 지도의 확대 레벨
       >
-        <MapMarker position={state.center}> </MapMarker>
+        <MapMarker // 인포윈도우를 생성하고 지도에 표시합니다
+          position={state.center}
+          clickable={true}
+          onMouseOver={() => setIsOpen(true)}
+          onMouseOut={() => setIsOpen(false)}
+        >
+          {isOpen && (
+            <div style={{ padding: '5px', color: '#000' }}>
+              <p>{state?.markerData?.place_name}</p>
+              <p>{state?.markerData?.phone}</p>
+            </div>
+          )}
+        </MapMarker>
       </Map>
       <StMain>
         <SearchBar>
