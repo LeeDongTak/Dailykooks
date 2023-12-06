@@ -1,16 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
 
-function Card() {
+function Card({ name, address, number, vote, menus }) {
   return (
     <StCardWrapper>
       <img src="" alt="image" />
       <div>
-        <h3>태평소국밥</h3>
-        <p>대전 유성구 문화원로 140</p>
+        <h3>{name}</h3>
+        <p>{address}</p>
         <p>
-          후기 <span>4.0(96)</span>
+          후기 <span>{vote}</span>
         </p>
+        {menus &&
+          Object.values(menus).map((menu, idx) => (
+            <div key={idx}>
+              <p>{menu.name}</p>
+              <p>{menu.price}</p>
+            </div>
+          ))}
         <p>매일 00:00 ~ 24:00</p>
         <p>포장 가능, 배달 불가</p>
       </div>

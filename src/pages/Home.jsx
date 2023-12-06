@@ -60,7 +60,7 @@ export default Home;
 
 const StHomeContainer = styled.div`
   display: grid;
-  height: 300px;
+  height: 90vh;
   grid-template-columns: 600px 1fr;
 `;
 const StMapWrapper = styled.section`
@@ -77,5 +77,6 @@ const StMain = styled.main`
   flex-direction: column;
   align-items: center;
   gap: 24px;
+  height: 90vh;
   padding: 0 12px;
 `;
