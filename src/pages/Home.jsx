@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 
 import styled from 'styled-components';
-import Card from '../components/Card';
 import CardList from '../components/CardList';
 import SearchBar from '../components/SearchBar';
 
@@ -56,11 +55,7 @@ function Home() {
             <button onClick={SearchMap}>클릭</button>
           </div>
         </SearchBar>
-        <CardList>
-          <Card />
-          <Card />
-          <Card />
-        </CardList>
+        <CardList />
       </StMain>
     </StHomeContainer>
   );
@@ -71,7 +66,7 @@ export default Home;
 const StHomeContainer = styled.div`
   display: grid;
   height: 100vh;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 0.5fr 1fr;
 `;
 const StMap = styled.div`
   width: 500px;
@@ -79,4 +74,9 @@ const StMap = styled.div`
 `;
 const StMain = styled.main`
   background: #eee;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 0 12px;
 `;
