@@ -17,6 +17,7 @@ function Home() {
   });
   const [searchAddress, SetSearchAddress] = useState();
 
+  //마커에 마우스 오버 할때 쓰는 state
   const [isOpen, setIsOpen] = useState(false);
 
   // 키워드 입력후 검색 클릭 시 원하는 키워드의 주소로 이동
