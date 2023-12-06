@@ -29,8 +29,10 @@ export default CardList;
 const StCardList = styled.ul`
   display: flex;
   justify-content: start;
+  align-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
-
+  overflow-y: scroll;
+  height: 100%;
   gap: 12px;
 `;

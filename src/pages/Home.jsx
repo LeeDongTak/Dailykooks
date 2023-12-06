@@ -36,18 +36,13 @@ function Home() {
 
   return (
     <StHomeContainer>
-      <Map // 지도를 표시할 Container
+      <StMap // 지도를 표시할 Container
         center={state.center}
         isPanto={state.isPanto}
-        style={{
-          // 지도의 크기
-          width: '100%',
-          height: '100%'
-        }}
         level={3} // 지도의 확대 레벨
       >
         <MapMarker position={state.center}> </MapMarker>
-      </Map>
+      </StMap>
       <StMain>
         <SearchBar>
           <div>
@@ -65,12 +60,16 @@ export default Home;
 
 const StHomeContainer = styled.div`
   display: grid;
-  height: 100vh;
-  grid-template-columns: 0.5fr 1fr;
+  height: 300px;
+  grid-template-columns: 600px 1fr;
 `;
-const StMap = styled.div`
-  width: 500px;
-  height: 400px;
+const StMapWrapper = styled.section`
+  width: 100%;
+  height: 100%;
+`;
+const StMap = styled(Map)`
+  width: 100%;
+  height: 90vh;
 `;
 const StMain = styled.main`
   background: #eee;
