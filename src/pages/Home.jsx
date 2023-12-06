@@ -1,8 +1,10 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { Map, MapMarker, useKakaoLoader } from 'react-kakao-maps-sdk';
+import React, { useState } from 'react';
+import { Map, MapMarker } from 'react-kakao-maps-sdk';
 
 import styled from 'styled-components';
+import Card from '../components/Card';
+import CardList from '../components/CardList';
+import SearchBar from '../components/SearchBar';
 
 function Home() {
   const { kakao } = window;
@@ -34,30 +36,47 @@ function Home() {
   };
 
   return (
-    <>
+    <StHomeContainer>
       <Map // 지도를 표시할 Container
         center={state.center}
         isPanto={state.isPanto}
         style={{
           // 지도의 크기
           width: '100%',
-          height: '450px'
+          height: '100%'
         }}
         level={3} // 지도의 확대 레벨
       >
         <MapMarker position={state.center}> </MapMarker>
       </Map>
-      <div>
-        <input onChange={handleSearchAddress}></input>
-        <button onClick={SearchMap}>클릭</button>
-      </div>
-    </>
+      <StMain>
+        <SearchBar>
+          <div>
+            <input onChange={handleSearchAddress}></input>
+            <button onClick={SearchMap}>클릭</button>
+          </div>
+        </SearchBar>
+        <CardList>
+          <Card />
+          <Card />
+          <Card />
+        </CardList>
+      </StMain>
+    </StHomeContainer>
   );
 }
 
 export default Home;
 
+const StHomeContainer = styled.div`
+  display: grid;
+  height: 100vh;
+  grid-template-columns: 1fr 1fr;
+`;
 const StMap = styled.div`
   width: 500px;
   height: 400px;
+`;
+const StMain = styled.main`
+  background: #eee;
 `;
