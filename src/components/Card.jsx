@@ -14,8 +14,8 @@ function Card({ name, address, number, vote, menus }) {
         {menus &&
           Object.values(menus).map((menu, idx) => (
             <div key={idx}>
-              <p>{menu.name}</p>
-              <p>{menu.price}</p>
+              <span>{menu.name}</span>
+              <span>&nbsp;{menu.price}</span>
             </div>
           ))}
         <p>매일 00:00 ~ 24:00</p>
@@ -30,6 +30,6 @@ export default Card;
 
 const StCardWrapper = styled.div`
   background-color: #fff;
-  width: 280px;
-  height: 220px;
+  width: 300px;
+  height: 260px;
 `;
