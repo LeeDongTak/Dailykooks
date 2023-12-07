@@ -8,12 +8,12 @@ function CardList() {
   const { isLoading, isError, data, error } = useQuery(['places'], getPlaces);
 
   if (isLoading) {
-    console.log(isLoading);
+    // console.log(isLoading);
     return <h1> 로딩 중... </h1>;
   }
 
   if (isError) {
-    console.log(error);
+    // console.log(error);
     return <h1>에러 발생</h1>;
   }
 
@@ -25,7 +25,7 @@ function CardList() {
       {data.map((item) => (
         <Card
           key={item.id}
-          name={item.name}
+          place_name={item.place_name}
           address={item.address}
           number={item.number}
           vote={item.vote}

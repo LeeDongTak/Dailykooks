@@ -6,18 +6,21 @@ import food from '../assets/food.jpg';
 import menu2 from '../assets/menu.svg';
 import delivery from '../assets/motorsycle2.svg';
 import star from '../assets/star-regular.svg';
-function Card({ name, address, number, vote, menus }) {
-  // const shortAddress = address.split(' ').slice(0, 3).join(' ');
-  const shortAddress = address.split(' ').toString();
-  console.log(shortAddress, '길이', shortAddress.length);
+function Card({ place_name, address, number, vote, menus }) {
+  const shortAddress = address.split(' ').slice(0, 2).join(' ');
+  // const shortAddress = address.split(' ').toString();
+  const menuNames = menus.map((menu) => menu.name);
+  // console.log(menuNames);
+
+  // console.log(shortAddress, '길이', shortAddress.length);
   return (
     <StCardWrapper>
       <BgFrame>
         <Bg src="https://cdn.pixabay.com/photo/2016/09/07/10/15/food-1651279_1280.jpg" />
       </BgFrame>
       <div>
-        <h3>[ {name} ]</h3>
-        <Menu>별별국밥</Menu>
+        <h3>[ {place_name} ]</h3>
+        <Menu>{menuNames.join(', ')}</Menu>
         <p>{shortAddress}</p>
         <Review>
           <span>
@@ -61,7 +64,7 @@ const DetailBox = styled.div`
   top: 0;
   left: 0;
   padding: 13px 20px;
-  transition: 1s;
+  transition: 0.5s ease-in-out;
   line-height: 1.8rem;
   border-radius: 20px;
   box-sizing: border-box;
@@ -75,7 +78,7 @@ const StCardWrapper = styled.li`
   width: 380px;
   margin: 20px;
   border-radius: 15px;
-  transition: 1s;
+  /* transition: 1s; */
   user-select: none;
   display: flex;
   font-size: 15px;

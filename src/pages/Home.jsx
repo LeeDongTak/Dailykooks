@@ -4,10 +4,18 @@ import finder from '../assets/finder.svg';
 import CardList from '../components/CardList';
 import MapWrapper from '../components/MapWrapper';
 import SearchBar from '../components/SearchBar';
+import useMarkerFromFirebase from '../hooks/useMarkerFromFirebase';
+import useMarkerFromKaKao from '../hooks/useMarkerFromKakao';
+
+// 2개의 서버 상태로 관리하는 것이 좋지 않은가
+// 하나는 파이어베이스 다른 하나는 카카오 서버
+// 파이어베이스는 후 순위, 카카오 서버의 데이터가 우선 순위가 높음
+// 2개의 리액트 쿼리를 사용한다
+
 function Home() {
   const { kakao } = window;
 
-  const [searchAddress, setSearchAddress] = useState();
+  const [searchAddress, setSearchAddress] = useState('');
   const [markers, setMarkers] = useState([]);
 
   const [state, setState] = useState({
@@ -19,24 +27,12 @@ function Home() {
     markerData: null
   });
 
-  // 키워드 입력후 검색 클릭 시 원하는 키워드의 주소로 이동
-  const onSearchBtnClickHandler = () => {
-    const placeSearchInstance = new kakao.maps.services.Places();
+  const { firebaseMarker } = useMarkerFromFirebase();
+  const { refetch, markerFromKaKao } = useMarkerFromKaKao({ kakao, searchAddress });
 
-    const searchCallBackFunc = function (data, status, pagination) {
-      if (status === kakao.maps.services.Status.OK) {
-        const newSearch = data[0];
-        setMarkers([...data]);
-        console.log(newSearch);
-        console.log(data);
-        setState({
-          markerData: data
-        });
-      }
-    };
-    placeSearchInstance.keywordSearch(`${searchAddress}`, searchCallBackFunc);
-  };
-  // console.log(state);
+  // setMarkers([...data]);
+
+  // 키워드 입력후 검색 클릭 시 원하는 키워드의 주소로 이동
 
   const onSearchAddressChangeHandler = (e) => {
     setSearchAddress(e.target.value);
@@ -44,12 +40,21 @@ function Home() {
 
   return (
     <StHomeContainer>
-      <MapWrapper searchAddress={searchAddress} SetSearchAddress={setSearchAddress} markers={markers} />
+      <MapWrapper
+        searchAddress={searchAddress}
+        SetSearchAddress={setSearchAddress}
+        markers={markerFromKaKao ? markerFromKaKao : firebaseMarker ? firebaseMarker : []}
+        setMarkers={setMarkers}
+      />
       <StMain>
         <SearchBar>
           <div>
             <input onChange={onSearchAddressChangeHandler} placeholder="오늘은 뭘 먹어볼까요?"></input>
-            <button onClick={onSearchBtnClickHandler}>
+            <button
+              onClick={() => {
+                refetch({ queryKey: ['kakao/places', { kakao, searchAddress }] });
+              }}
+            >
               <img src={finder} alt="search" />
             </button>
           </div>
