@@ -17,7 +17,8 @@ function CardList() {
     return <h1>에러 발생</h1>;
   }
 
-  console.log(data);
+  // console.log(data);
+  data.forEach((item) => console.log(`위도 : ${item.x} 경도: ${item.y}`));
 
   return (
     <StCardList>
@@ -29,6 +30,8 @@ function CardList() {
           number={item.number}
           vote={item.vote}
           menus={item.menus}
+          x={item.x}
+          y={item.y}
         />
       ))}
     </StCardList>
@@ -39,10 +42,29 @@ export default CardList;
 
 const StCardList = styled.ul`
   display: flex;
-  justify-content: start;
-  align-content: flex-start;
+  justify-content: flex-start;
+  //
+
   align-items: center;
+  flex-direction: row;
   flex-wrap: wrap;
-  overflow-y: scroll;
-  height: 100%;
+  //background-color: aqua;
+  @media screen and (max-width: 1763px) {
+    width: 840px;
+  }
+  @media screen and (max-width: 1463px) {
+    width: 800px;
+  }
+  @media screen and (max-width: 1425px) {
+    width: 760px;
+  }
+  @media screen and (max-width: 1383px) {
+    width: 680px;
+  }
+  @media screen and (max-width: 1304px) {
+    width: 660px;
+  }
+  @media screen and (max-width: 1283px) {
+    width: 640px;
+  }
 `;

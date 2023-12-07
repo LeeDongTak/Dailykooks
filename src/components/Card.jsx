@@ -7,6 +7,7 @@ import menu2 from '../assets/menu.svg';
 import delivery from '../assets/motorsycle2.svg';
 import star from '../assets/star-regular.svg';
 function Card({ name, address, number, vote, menus }) {
+  let addressCut = address.substring(0, 9);
   return (
     <StCardWrapper>
       <BgFrame>
@@ -54,7 +55,7 @@ export default Card;
 const DetailBox = styled.div`
   height: 105px;
   position: absolute;
-  transform: translate(0, 253px); //203
+  transform: translate(0, 253px);
   top: 0;
   left: 0;
   padding: 13px 20px;
@@ -67,7 +68,7 @@ const DetailBox = styled.div`
   overflow: auto;
   background-color: rgba(219, 200, 182, 0.9);
 `;
-const StCardWrapper = styled.div`
+const StCardWrapper = styled.li`
   background-color: #fff;
   width: 380px;
   margin: 20px;
@@ -131,6 +132,38 @@ const StCardWrapper = styled.div`
 
   &:hover ${DetailBox} {
     transform: translate(0, 0px);
+  }
+
+  @media screen and (max-width: 1883px) {
+    width: 360px;
+  }
+  @media screen and (max-width: 1825px) {
+    width: 350px;
+    margin: 15px;
+  }
+  @media screen and (max-width: 1763px) {
+    width: 380px;
+    margin: 20px;
+  }
+  @media screen and (max-width: 1463px) {
+    width: 360px;
+    margin: 20px;
+  }
+  @media screen and (max-width: 1423px) {
+    width: 350px;
+    margin: 15px;
+  }
+  @media screen and (max-width: 1383px) {
+    width: 320px;
+    margin: 10px;
+  }
+  @media screen and (max-width: 1303px) {
+    width: 310px;
+    margin: 10px;
+  }
+  @media screen and (max-width: 1283px) {
+    width: 300px;
+    margin: 10px;
   }
 `;
 
