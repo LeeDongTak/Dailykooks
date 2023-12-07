@@ -7,6 +7,7 @@ import SearchBar from '../components/SearchBar';
 function Home() {
   const { kakao } = window;
   const mapRef = useRef(null);
+  const markerRef = useRef(null);
   const [searchAddress, SetSearchAddress] = useState();
   const [markers, setMarkers] = useState([]);
 
@@ -21,15 +22,16 @@ function Home() {
 
   //마커에 마우스 오버 할때 쓰는 state
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedMarker, setSelectedMarker] = useState('');
 
   // 키워드 입력후 검색 클릭 시 원하는 키워드의 주소로 이동
-  const SearchMap = () => {
-    const ps = new kakao.maps.services.Places();
+  const onSearchBtnClickHandler = () => {
+    const placeSearchInstance = new kakao.maps.services.Places();
 
-    const placesSearchCB = function (data, status, pagination) {
+    const searchCallBackFunc = function (data, status, pagination) {
       if (status === kakao.maps.services.Status.OK) {
         const newSearch = data[0];
-        setMarkers([...data.map((x) => x)]);
+        setMarkers([...data]);
         console.log(newSearch);
         console.log(data);
         setState({
@@ -37,7 +39,7 @@ function Home() {
         });
       }
     };
-    ps.keywordSearch(`${searchAddress}`, placesSearchCB);
+    placeSearchInstance.keywordSearch(`${searchAddress}`, searchCallBackFunc);
   };
   console.log(state);
 
@@ -56,11 +58,23 @@ function Home() {
   //   ps.keywordSearch(`${searchAddress}`, placesSearchCB);
   // };
 
-  const handleSearchAddress = (e) => {
+  const onSearchAddressChangeHandler = (e) => {
     SetSearchAddress(e.target.value);
   };
 
+  const onMarkerMouseEventHandler = (id, event) => {
+    if (event === 'over') {
+      setIsOpen(true);
+      setSelectedMarker(id);
+    }
+    if (event === 'out') {
+      setIsOpen(false);
+    }
+    // console.log(id);
+  };
+
   const bounds = useMemo(() => {}, [markers]);
+
   useEffect(() => {
     const bounds = new kakao.maps.LatLngBounds();
     markers.forEach((point) => {
@@ -83,10 +97,11 @@ function Home() {
             key={`${item.x - item.y}`}
             position={{ lat: item.y, lng: item.x }}
             clickable={true}
-            onMouseOver={() => setIsOpen(true)}
-            onMouseOut={() => setIsOpen(false)}
+            // onMouseOver={() => setIsOpen(true)}
+            onMouseOver={() => onMarkerMouseEventHandler(item.id, 'over')}
+            onMouseOut={() => onMarkerMouseEventHandler(item.id, 'out')}
           >
-            {isOpen && (
+            {isOpen && item.id === selectedMarker && (
               <div style={{ padding: '5px', color: '#000' }}>
                 <p>{item?.place_name}</p>
                 <p>{item?.phone}</p>
@@ -98,8 +113,8 @@ function Home() {
       <StMain>
         <SearchBar>
           <div>
-            <input onChange={handleSearchAddress}></input>
-            <button onClick={SearchMap}>클릭</button>
+            <input onChange={onSearchAddressChangeHandler}></input>
+            <button onClick={onSearchBtnClickHandler}>클릭</button>
           </div>
         </SearchBar>
         <CardList />
