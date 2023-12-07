@@ -7,6 +7,9 @@ import menu2 from '../assets/menu.svg';
 import delivery from '../assets/motorsycle2.svg';
 import star from '../assets/star-regular.svg';
 function Card({ name, address, number, vote, menus }) {
+  // const shortAddress = address.split(' ').slice(0, 3).join(' ');
+  const shortAddress = address.split(' ').toString();
+  console.log(shortAddress, '길이', shortAddress.length);
   return (
     <StCardWrapper>
       <BgFrame>
@@ -15,7 +18,7 @@ function Card({ name, address, number, vote, menus }) {
       <div>
         <h3>[ {name} ]</h3>
         <Menu>별별국밥</Menu>
-        <p>{address}</p>
+        <p>{shortAddress}</p>
         <Review>
           <span>
             <img src={star} />
