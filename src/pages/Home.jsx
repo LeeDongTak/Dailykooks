@@ -7,28 +7,13 @@ import SearchBar from '../components/SearchBar';
 import useMarkerFromFirebase from '../hooks/useMarkerFromFirebase';
 import useMarkerFromKaKao from '../hooks/useMarkerFromKakao';
 
-// 2개의 서버 상태로 관리하는 것이 좋지 않은가
-// 하나는 파이어베이스 다른 하나는 카카오 서버
-// 파이어베이스는 후 순위, 카카오 서버의 데이터가 우선 순위가 높음
-// 2개의 리액트 쿼리를 사용한다
-
 function Home() {
   const { kakao } = window;
 
   const [searchAddress, setSearchAddress] = useState('');
-  const [markers, setMarkers] = useState([]);
 
-  const [state, setState] = useState({
-    // 지도의 초기 위치
-    center: [],
-    // 지도 위치 변경시 panto를 이용할지(부드럽게 이동)
-    isPanto: true,
-
-    markerData: null
-  });
-
-  const { firebaseMarker } = useMarkerFromFirebase();
-  const { refetch, markerFromKaKao } = useMarkerFromKaKao({ kakao, searchAddress });
+  const { markersFromFirebase } = useMarkerFromFirebase();
+  const { refetch, markersFromKaKao } = useMarkerFromKaKao({ kakao, searchAddress });
 
   // setMarkers([...data]);
 
@@ -43,8 +28,7 @@ function Home() {
       <MapWrapper
         searchAddress={searchAddress}
         SetSearchAddress={setSearchAddress}
-        markers={markerFromKaKao ? markerFromKaKao : firebaseMarker ? firebaseMarker : []}
-        setMarkers={setMarkers}
+        markers={markersFromKaKao ? markersFromKaKao : markersFromFirebase ? markersFromFirebase : []}
       />
       <StMain>
         <SearchBar>
