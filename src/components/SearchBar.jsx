@@ -11,8 +11,26 @@ const StSearchBarContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 20px 0;
 
   input {
     padding: 8px;
+    font-size: 20px;
+    border: none;
+    padding: 15px 25px;
+    margin-right: 10px;
+    border-radius: 30px;
+    outline: none;
+    &::placeholder {
+      color: #ccc;
+    }
+  }
+
+  button {
+    border: none;
+    font-size: 20px;
+    padding: 10px 20px;
+
+    border-radius: 5px;
   }
 `;

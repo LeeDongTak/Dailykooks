@@ -4,7 +4,10 @@ import styled from 'styled-components';
 function Header() {
   return (
     <StHeader>
-      <button>Logo</button>
+      <button>
+        데일리국밥
+        <img src={require('../assets/bowl.svg')} />
+      </button>
     </StHeader>
   );
 }
@@ -17,11 +20,12 @@ const StHeader = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #f0f;
+  background: #e6d5b8;
 
   button {
-    width: 60px;
-    height: 40px;
-    border-radius: 50%;
+    background-color: transparent;
+    font-size: 20px;
+    font-weight: bold;
+    border: none;
   }
 `;
