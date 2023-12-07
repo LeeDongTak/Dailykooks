@@ -54,7 +54,9 @@ function Home() {
             </button>
           </div>
         </SearchBar>
-        <CardList />
+        <CardContainer>
+          <CardList />
+        </CardContainer>
       </StMain>
     </StHomeContainer>
   );
@@ -76,4 +78,13 @@ const StMain = styled.main`
   gap: 24px;
   height: 90vh;
   padding: 0 12px;
+`;
+
+const CardContainer = styled.div`
+  overflow-y: scroll;
+  display: flex;
+  //background-color: red;
+  width: 100%;
+  justify-content: center;
+  height: 100%;
 `;
