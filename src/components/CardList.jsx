@@ -45,5 +45,4 @@ const StCardList = styled.ul`
   flex-wrap: wrap;
   overflow-y: scroll;
   height: 100%;
-  gap: 12px;
 `;

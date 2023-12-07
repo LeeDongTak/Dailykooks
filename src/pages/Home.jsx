@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import styled from 'styled-components';
+import finder from '../assets/finder.svg';
 import CardList from '../components/CardList';
 import SearchBar from '../components/SearchBar';
-
 function Home() {
   const { kakao } = window;
   const mapRef = useRef(null);
@@ -113,8 +113,10 @@ function Home() {
       <StMain>
         <SearchBar>
           <div>
-            <input onChange={onSearchAddressChangeHandler}></input>
-            <button onClick={onSearchBtnClickHandler}>클릭</button>
+            <input onChange={onSearchAddressChangeHandler} placeholder="오늘은 뭘 먹어볼까요?"></input>
+            <button onClick={onSearchBtnClickHandler}>
+              <img src={finder} />
+            </button>
           </div>
         </SearchBar>
         <CardList />
