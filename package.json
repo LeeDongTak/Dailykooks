@@ -12,6 +12,9 @@
     "@testing-library/user-event": "^13.2.1",
     "axios": "^1.6.2",
     "cheerio": "^1.0.0-rc.12",
+    "express": "^4.18.2",
+    "http-proxy-middleware": "^2.0.6",
+    "puppeteer": "^21.6.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-kakao-maps-sdk": "^1.1.24",
@@ -47,5 +50,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "proxy": "https://place.map.kakao.com"
 }

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Map, MapMarker, useKakaoLoader } from 'react-kakao-maps-sdk';
-import { Cheerio } from 'cheerio';
+
 
 import styled from 'styled-components';
 
@@ -26,7 +26,7 @@ function Home() {
     };
     ps.keywordSearch(`${searchAddress}`, placesSearchCB);
   };
-  
+
   const handleSearchAddress = (e) => {
     SetSearchAddress(e.target.value);
   };
@@ -34,7 +34,6 @@ function Home() {
   const bounds = useMemo(() => {}, [markers]);
   useEffect(() => {
     const bounds = new kakao.maps.LatLngBounds();
-    console.log(markers);
     markers.forEach((point) => {
       bounds.extend(new kakao.maps.LatLng(point.y, point.x));
     });
@@ -42,7 +41,38 @@ function Home() {
     if (map) map.setBounds(bounds);
   }, [markers]);
 
+  useEffect(() => {
+    // const getHTML  = async () => {
+    //   try {
+    //     return await axios.get('/455501700')
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // };
+    // const parsing = async () => {
+    //   // 위에서 추출한 HTML 전체 가져오기
+    //   const html = await getHTML();
+    
+    //   console.log(html.data)
+    // }
+    
+
+  }, []);
+
+
+
+
+
+
+
+
+
+
+
+
+
   
+
   return (
     <>
       <Map // 지도를 표시할 Container
@@ -83,6 +113,3 @@ const StMap = styled.div`
   width: 500px;
   height: 400px;
 `;
-
-
-
