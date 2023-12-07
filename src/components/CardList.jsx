@@ -18,6 +18,7 @@ function CardList() {
   }
 
   // console.log(data);
+  data.forEach((item) => console.log(`위도 : ${item.x} 경도: ${item.y}`));
 
   return (
     <StCardList>
@@ -29,6 +30,8 @@ function CardList() {
           number={item.number}
           vote={item.vote}
           menus={item.menus}
+          x={item.x}
+          y={item.y}
         />
       ))}
     </StCardList>
