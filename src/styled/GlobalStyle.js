@@ -24,7 +24,7 @@ const GlobalStyle = createGlobalStyle`
         padding: 0;
         border: 0;
         font-size: 100%;
-        color:#1b1a17;
+        color:#333;
         font-family: 'NanumSquareNeo-Variable';
         font-weight: 400;
         vertical-align: baseline;

@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-
+import bowl from '../assets/bowl.svg';
 function Header() {
   return (
     <StHeader>
-      <button>
-        데일리국밥
-        <img src={require('../assets/bowl.svg')} />
-      </button>
+      <div>
+        <img src={bowl} />
+        <p>데일리국밥</p>
+      </div>
     </StHeader>
   );
 }
@@ -20,12 +20,21 @@ const StHeader = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #e6d5b8;
+  background: #dbc8b6;
 
-  button {
+  div {
+    display: flex;
+    align-items: center;
+  }
+  p {
     background-color: transparent;
     font-size: 20px;
+    color: #866761;
     font-weight: bold;
     border: none;
+    margin-left: 6px;
+  }
+  img {
+    height: 40px;
   }
 `;
