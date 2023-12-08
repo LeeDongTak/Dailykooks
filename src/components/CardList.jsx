@@ -26,7 +26,7 @@ function CardList() {
         <Card
           key={item.id}
           place_name={item.place_name}
-          address={item.address}
+          address={item.road_address_name}
           number={item.number}
           vote={item.vote}
           menus={item.menus}
