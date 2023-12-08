@@ -7,12 +7,16 @@ import clock from '../assets/clock.svg';
 import food from '../assets/food.jpg';
 import delivery from '../assets/motorsycle2.svg';
 import star from '../assets/star-regular.svg';
+import useMarker from '../hooks/useMarker';
 import { setSelectedMarker } from '../redux/modules/markerSlice';
 
 function Card({ place_name, address, number, vote, menus, id }) {
+  const { kakao } = window;
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { markers, selectedMarker } = useSelector((state) => state.marker);
+  const { searchAddress } = useSelector((state) => state.search);
+  const { selectedMarker } = useSelector((state) => state.marker);
+  const { markers } = useMarker({ kakao, searchAddress });
   const shortAddress = address.split(' ').slice(0, 2).join(' ');
   // const
   // const shortAddress = address.split(' ').toString();
@@ -22,7 +26,7 @@ function Card({ place_name, address, number, vote, menus, id }) {
   // console.log(shortAddress, '길이', shortAddress.length);
 
   const onGotoDetailBtnClickHandler = () => {
-    dispatch(setSelectedMarker(id));
+    dispatch(setSelectedMarker({ markers, id }));
     navigate(`/places/${id}`);
     console.log(selectedMarker);
   };

@@ -2,15 +2,16 @@ import React, { useRef, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+import useMarker from '../hooks/useMarker';
 import { setHoveredMarker, setSelectedMarker } from '../redux/modules/markerSlice';
 
 function MapWrapper() {
+  const { kakao } = window;
   const mapRef = useRef(null);
   const dispatch = useDispatch();
-  const { markers } = useSelector((state) => state.marker);
+  const { searchAddress } = useSelector((state) => state.search);
+  const { markers } = useMarker({ kakao, searchAddress });
   const { hoveredMarkerId } = useSelector((state) => state.marker);
-  // console.log('current markers is : ', markers);
-
   const [state, setState] = useState({
     // 지도의 초기 위치
     center: [],
@@ -31,10 +32,9 @@ function MapWrapper() {
     if (eventType === 'out') {
       setIsOpen(false);
     }
-    // console.log(id);
   };
   const onMarkerClickHandler = (id) => {
-    dispatch(setSelectedMarker(id));
+    dispatch(setSelectedMarker({ markers, id }));
   };
 
   return (
