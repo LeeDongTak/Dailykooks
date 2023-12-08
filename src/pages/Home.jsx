@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import finder from '../assets/finder.svg';
@@ -7,6 +7,7 @@ import MapWrapper from '../components/MapWrapper';
 import SearchBar from '../components/SearchBar';
 import useMarkerFromFirebase from '../hooks/useMarkerFromFirebase';
 import useMarkerFromKaKao from '../hooks/useMarkerFromKakao';
+import { setMarkers } from '../redux/modules/markerSlice';
 import { setSearchAddress } from '../redux/modules/searchSlice';
 
 function Home() {
@@ -14,23 +15,31 @@ function Home() {
 
   // const [searchAddress, setSearchAddress] = useState('');
   const dispatch = useDispatch();
-  const { markersFromFirebase } = useMarkerFromFirebase();
+  const { markersFromFirebase, isLoadingFromFirebase } = useMarkerFromFirebase();
   const { searchAddress } = useSelector((state) => state.search);
-  const { refetch, markersFromKaKao } = useMarkerFromKaKao({ kakao, searchAddress });
+  const { refetch, markersFromKaKao, isLoadingFromKakao } = useMarkerFromKaKao({ kakao, searchAddress });
+  const { markers } = useSelector((state) => state.marker);
 
-  // setMarkers([...data]);
+  const currentMarkers = markersFromKaKao ? markersFromKaKao : markersFromFirebase ? markersFromFirebase : [];
 
-  // 키워드 입력후 검색 클릭 시 원하는 키워드의 주소로 이동
+  useEffect(() => {
+    dispatch(setMarkers(currentMarkers));
+  }, [isLoadingFromFirebase, isLoadingFromKakao]);
+
+  console.log(markers);
+  if (isLoadingFromFirebase) {
+    return <h1> 로딩 중... </h1>;
+  }
 
   const onSearchAddressChangeHandler = (e) => {
     dispatch(setSearchAddress(e.target.value));
   };
-  console.log('data from firebase : ', markersFromFirebase);
-  console.log('---------------');
-  console.log('data from kakaomap search : ', markersFromKaKao);
+  // console.log('data from firebase : ', markersFromFirebase);
+  // console.log('---------------');
+  // console.log('data from kakaomap search : ', markersFromKaKao);
   return (
     <StHomeContainer>
-      <MapWrapper markers={markersFromKaKao ? markersFromKaKao : markersFromFirebase ? markersFromFirebase : []} />
+      <MapWrapper markers={currentMarkers} />
       <StMain>
         <SearchBar>
           <div>
@@ -45,7 +54,7 @@ function Home() {
           </div>
         </SearchBar>
         <CardContainer>
-          <CardList markers={markersFromKaKao ? markersFromKaKao : markersFromFirebase ? markersFromFirebase : []} />
+          <CardList markers={currentMarkers} />
         </CardContainer>
       </StMain>
     </StHomeContainer>

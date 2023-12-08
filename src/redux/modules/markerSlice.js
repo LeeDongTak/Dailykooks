@@ -1,22 +1,29 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  hoveredMarker: '',
-  selectedMarker: ''
+  markers: [],
+  hoveredMarkerId: '',
+  selectedMarker: {}
 };
 
 const markerSlice = createSlice({
   name: 'marker',
   initialState,
   reducers: {
+    setMarkers: (state, action) => {
+      state.markers = [...action.payload];
+    },
     setHoveredMarker: (state, action) => {
-      state.hoveredMarker = action.payload;
+      state.hoveredMarkerId = action.payload;
     },
     setSelectedMarker: (state, action) => {
-      state.selectedMarker = action.payload;
+      const selectedId = action.payload;
+      const marker = state.markers.find((item) => item?.id === selectedId);
+      state.selectedMarker = marker;
+      console.log(state.selectedMarker);
     }
   }
 });
 
-export const { setHoveredMarker, setSelectedMarker } = markerSlice.actions;
+export const { setMarkers, setHoveredMarker, setSelectedMarker } = markerSlice.actions;
 export default markerSlice.reducer;

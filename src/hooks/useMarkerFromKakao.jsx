@@ -14,7 +14,7 @@ export default function useMarkerFromKaKao({ kakao, searchAddress }) {
     queryClient.invalidateQueries('kakao/places');
   }}); */
 
-  return { markersFromKaKao: data, isLoading, isError, error, refetch };
+  return { markersFromKaKao: data, isLoadingFromKakao: isLoading, isError, error, refetch };
 }
 
 export const MarkerFromKakaoProvider = ({ children }) => {

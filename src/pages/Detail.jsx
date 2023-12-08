@@ -1,59 +1,46 @@
-import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { StaticMap } from 'react-kakao-maps-sdk';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { getPlaces } from '../api/places';
 import location from '../assets/location_icon.svg';
 import menu2 from '../assets/menu.svg';
 import phone from '../assets/phone.svg';
 import star from '../assets/star-regular.svg';
 function Detail() {
+  const { selectedMarker } = useSelector((state) => state.marker);
   const { id } = useParams();
 
-  const { isLoading, isError, data, error } = useQuery(['places'], getPlaces);
-  if (isLoading) {
-    // console.log(isLoading);
-    return <h1> 로딩 중... </h1>;
-  }
-
-  if (isError) {
-    // console.log(error);
-    return <h1>에러 발생</h1>;
-  }
-
-  // id에 해당하는 것 찾기
-  const selectedPlace = data.find((item) => item.id === id);
-
-  if (!selectedPlace) {
+  console.log(selectedMarker);
+  if (!selectedMarker) {
     return <p>페이지를 찾을수 없습니다.</p>;
   }
-  //console.log(selectedPlace);
+  //console.log(selectedMarker);
 
   //지도 위치 설정
-  const xLoc = Number(selectedPlace.x);
-  const yLoc = Number(selectedPlace.y);
+  const xLoc = Number(selectedMarker.x);
+  const yLoc = Number(selectedMarker.y);
 
   return (
     <DetailPage>
-      <h1>{selectedPlace.place_name}</h1>
+      <h1>{selectedMarker.place_name}</h1>
       <InfoBox>
         <p>
           <img src={location} />
-          {selectedPlace.road_address_name}
+          {selectedMarker.road_address_name}
         </p>
         <p>
           <img src={phone} />
-          {selectedPlace.phone}
+          {selectedMarker.phone}
         </p>
         <p>
-          <img src={star} /> {selectedPlace.vote}
+          <img src={star} /> {selectedMarker?.vote}
         </p>
         <ul>
-          {selectedPlace.menus.map((menu, index) => (
+          {selectedMarker.menus?.map((menu, index) => (
             <li key={index}>
               <img src={menu2} />
-              {menu.name} {menu.price}원
+              {menu?.name} {menu?.price}원
             </li>
           ))}
         </ul>

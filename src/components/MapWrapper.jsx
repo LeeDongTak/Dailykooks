@@ -4,11 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { setHoveredMarker, setSelectedMarker } from '../redux/modules/markerSlice';
 
-function MapWrapper({ markers }) {
+function MapWrapper() {
   const mapRef = useRef(null);
-  const markerRef = useRef(null);
   const dispatch = useDispatch();
-  const { hoveredMarker, selectedMarker } = useSelector((state) => state.marker);
+  const { markers } = useSelector((state) => state.marker);
+  const { hoveredMarkerId } = useSelector((state) => state.marker);
   // console.log('current markers is : ', markers);
 
   const [state, setState] = useState({
@@ -34,7 +34,6 @@ function MapWrapper({ markers }) {
     // console.log(id);
   };
   const onMarkerClickHandler = (id) => {
-    // alert(id);
     dispatch(setSelectedMarker(id));
   };
 
@@ -56,7 +55,7 @@ function MapWrapper({ markers }) {
           onMouseOut={() => onMarkerMouseEventHandler(item.id, 'out')}
           onClick={() => onMarkerClickHandler(item.id)}
         >
-          {isOpen && item.id === hoveredMarker && (
+          {isOpen && item.id === hoveredMarkerId && (
             <div style={{ padding: '5px', color: '#000' }}>
               <p>{item?.place_name}</p>
               <p>{item?.phone}</p>

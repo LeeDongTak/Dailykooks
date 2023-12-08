@@ -8,7 +8,7 @@ export default function useMarkerFromFirebase() {
     staleTime: Infinity
   });
 
-  return { markersFromFirebase: data, isLoading, isError, error };
+  return { markersFromFirebase: data, isLoadingFromFirebase: isLoading, isError, error };
 }
 
 export const MarkerFromFirebaseProvider = ({ children }) => {

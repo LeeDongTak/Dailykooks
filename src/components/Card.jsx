@@ -1,4 +1,5 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import bag from '../assets/bag2.svg';
@@ -6,14 +7,26 @@ import clock from '../assets/clock.svg';
 import food from '../assets/food.jpg';
 import delivery from '../assets/motorsycle2.svg';
 import star from '../assets/star-regular.svg';
+import { setSelectedMarker } from '../redux/modules/markerSlice';
+
 function Card({ place_name, address, number, vote, menus, id }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { markers, selectedMarker } = useSelector((state) => state.marker);
   const shortAddress = address.split(' ').slice(0, 2).join(' ');
+  // const
   // const shortAddress = address.split(' ').toString();
   // const menuNames = menus.map((menu) => menu.name);
   // console.log(menuNames);
 
   // console.log(shortAddress, '길이', shortAddress.length);
+
+  const onGotoDetailBtnClickHandler = () => {
+    dispatch(setSelectedMarker(id));
+    navigate(`/places/${id}`);
+    console.log(selectedMarker);
+  };
+
   return (
     <StCardWrapper>
       <BgFrame>
@@ -52,7 +65,7 @@ function Card({ place_name, address, number, vote, menus, id }) {
             ))} */}
         </DetailBox>
       </div>
-      <button onClick={() => navigate(`/places/${id}`)}>상세 보기</button>
+      <button onClick={onGotoDetailBtnClickHandler}>상세 보기</button>
     </StCardWrapper>
   );
 }

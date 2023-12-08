@@ -1,22 +1,18 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Card from './Card';
 
-function CardList({ markers }) {
-  const { kakao } = window;
-  const { selectedMarker } = useSelector((state) => state.search);
-
-  useEffect(() => {
-    console.log('wow');
-  }, [selectedMarker]);
+function CardList() {
+  const { markers } = useSelector((state) => state.marker);
+  const { selectedMarker } = useSelector((state) => state.marker);
 
   return (
-    <>
+    <StCardListContainer>
       {markers
-        .filter((item) => item.id === selectedMarker)
+        .filter((item) => item.id === selectedMarker.id)
         .map((item) => (
-          <div>
+          <div key={item.id}>
             <p>{item.id}</p>
             <p>{item.place_name}</p>
           </div>
@@ -36,11 +32,13 @@ function CardList({ markers }) {
           />
         ))}
       </StCardList>
-    </>
+    </StCardListContainer>
   );
 }
 
 export default CardList;
+
+const StCardListContainer = styled.section``;
 
 const StCardList = styled.ul`
   display: flex;
