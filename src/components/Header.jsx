@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import bowl from '../assets/bowl.svg';
+import logo from '../assets/logo.svg';
 function Header() {
   const navigate = useNavigate();
   const onLogoClickHandler = () => {
@@ -10,7 +10,7 @@ function Header() {
   return (
     <StHeader>
       <div onClick={onLogoClickHandler}>
-        <img src={bowl} />
+        <img src={logo} />
         <p>데일리국밥</p>
       </div>
     </StHeader>
