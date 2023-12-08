@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Card from './Card';
@@ -7,6 +7,10 @@ function CardList({ markers }) {
   const { kakao } = window;
   const { selectedMarker } = useSelector((state) => state.search);
 
+  useEffect(() => {
+    console.log('wow');
+  }, [selectedMarker]);
+
   return (
     <>
       {markers
@@ -14,7 +18,7 @@ function CardList({ markers }) {
         .map((item) => (
           <div>
             <p>{item.id}</p>
-            <p>{item.name}</p>
+            <p>{item.place_name}</p>
           </div>
         ))}
       <StCardList>

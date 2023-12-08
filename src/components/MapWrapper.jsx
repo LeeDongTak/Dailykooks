@@ -34,7 +34,7 @@ function MapWrapper({ markers }) {
     // console.log(id);
   };
   const onMarkerClickHandler = (id) => {
-    alert(id);
+    // alert(id);
     dispatch(setSelectedMarker(id));
   };
 
