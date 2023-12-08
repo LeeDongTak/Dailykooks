@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
+import { Map, MapMarker, StaticMap } from 'react-kakao-maps-sdk';
 import { useParams } from 'react-router-dom';
 import { getPlaces } from '../api/places';
-
 function Detail() {
   const { id } = useParams();
 
@@ -31,6 +31,10 @@ function Detail() {
     console.log(`Name: ${menu.name}, Price: ${menu.price}`);
   });
 
+  console.log(selectedPlace.x);
+  const xLoc = Number(selectedPlace.x);
+  const yLoc = Number(selectedPlace.y);
+
   return (
     <div>
       <h1>{selectedPlace.place_name}</h1>
@@ -44,6 +48,45 @@ function Detail() {
           </li>
         ))}
       </ul>
+      <StaticMap // 지도를 표시할 Container
+        center={{
+          // 지도의 중심좌표
+          lat: xLoc,
+          lng: yLoc
+        }}
+        style={{
+          // 지도의 크기
+          width: '900px',
+          height: '650px'
+        }}
+        marker={{
+          lat: xLoc,
+          lng: yLoc
+        }}
+        level={3} // 지도의 확대 레벨
+      />
+
+      <Map // 지도를 표시할 Container
+        center={{
+          // 지도의 중심좌표
+          lat: xLoc,
+          lng: yLoc
+        }}
+        style={{
+          // 지도의 크기
+          width: '100%',
+          height: '450px'
+        }}
+        level={4} // 지도의 확대 레벨
+      >
+        <MapMarker // 마커를 생성합니다
+          position={{
+            // 마커가 표시될 위치입니다
+            lat: xLoc,
+            lng: yLoc
+          }}
+        />
+      </Map>
     </div>
   );
 }
