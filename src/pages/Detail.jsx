@@ -30,7 +30,6 @@ function Detail() {
         <InfoBoxFrame>
           <InfoBox>
             <p>
-              {' '}
               <img src={location} />
               {selectedMarker.road_address_name}
             </p>

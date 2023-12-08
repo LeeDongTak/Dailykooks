@@ -2,11 +2,11 @@ import React from 'react';
 import { ImEnlarge2 } from 'react-icons/im';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-
 import styled from 'styled-components';
 import bag from '../assets/bag2.svg';
 import clock from '../assets/clock.svg';
 import food from '../assets/food.jpg';
+import menu2 from '../assets/menu.svg';
 import delivery from '../assets/motorsycle2.svg';
 import star from '../assets/star-regular.svg';
 import useMarker from '../hooks/useMarker';
@@ -46,6 +46,9 @@ function Card({ place_name, address, number, vote, menus, id }) {
     console.log(selectedMarker);
   };
 
+  //console.log(vote);
+  //console.log(menus);
+  //console.log('-----------------------');
   return (
     <StCardWrapper>
       <BgFrame>
@@ -56,10 +59,17 @@ function Card({ place_name, address, number, vote, menus, id }) {
         {/* <Menu>{menuNames.join(', ')}</Menu> */}
         <Address>{shortAddress}</Address>
         <Review>
-          <span>
-            <img src={star} alt="" />
-            {vote}
-          </span>
+          {vote !== undefined ? (
+            <span>
+              <img src={star} alt="" />
+              {vote}
+            </span>
+          ) : (
+            <p>
+              <img src={star} alt="" />
+              평점정보가 없습니다.
+            </p>
+          )}
         </Review>
         <DetailBox>
           <p>
@@ -72,7 +82,7 @@ function Card({ place_name, address, number, vote, menus, id }) {
             포장 가능, <img src={delivery} alt="" />
             배달 불가
           </p>
-          {/* {menus &&
+          {menus &&
             Object.values(menus).map((menu, idx) => (
               <div key={idx}>
                 <span>
@@ -81,7 +91,7 @@ function Card({ place_name, address, number, vote, menus, id }) {
                 </span>
                 <span>{menu.price}</span>
               </div>
-            ))} */}
+            ))}
         </DetailBox>
       </div>
       <Enlarge onClick={onGotoDetailBtnClickHandler} />

@@ -27,8 +27,8 @@ function CardList() {
             place_name={item.place_name}
             address={item.road_address_name}
             number={item.phone}
-            // vote={item.vote}
-            // menus={item.menus}
+            vote={item?.vote}
+            menus={item?.menus}
             id={item.id}
             x={item.x}
             y={item.y}
