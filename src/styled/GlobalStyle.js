@@ -1,6 +1,18 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
+@font-face {
+    font-family: 'NanumSquareNeo-Variable';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'TheJamsil5Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
     html, body, div, span, applet, object, iframe,
     h1, h2, h3, h4, h5, h6, p, blockquote, pre,
     a, abbr, acronym, address, big, cite, code,
@@ -18,7 +30,9 @@ const GlobalStyle = createGlobalStyle`
         padding: 0;
         border: 0;
         font-size: 100%;
-        font: inherit;
+        color:#333;
+        font-family: 'NanumSquareNeo-Variable';
+        font-weight: 400;
         vertical-align: baseline;
     }
     /* HTML5 display-role reset for older browsers */
@@ -44,6 +58,7 @@ const GlobalStyle = createGlobalStyle`
         border-collapse: collapse;
         border-spacing: 0;
     }
+    a{text-decoration:none;}
 `;
 
 export default GlobalStyle;

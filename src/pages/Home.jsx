@@ -1,63 +1,89 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { Map, MapMarker, useKakaoLoader } from 'react-kakao-maps-sdk';
-
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+import finder from '../assets/finder.svg';
+import CardList from '../components/CardList';
+import MapWrapper from '../components/MapWrapper';
+import SearchBar from '../components/SearchBar';
+import useMarkerFromFirebase from '../hooks/useMarkerFromFirebase';
+import useMarkerFromKaKao from '../hooks/useMarkerFromKakao';
+import { setMarkers } from '../redux/modules/markerSlice';
+import { setSearchAddress } from '../redux/modules/searchSlice';
 
 function Home() {
   const { kakao } = window;
-  const [state, setState] = useState({
-    // 지도의 초기 위치
-    center: { lat: 37.49676871972202, lng: 127.02474726969814 },
-    // 지도 위치 변경시 panto를 이용할지(부드럽게 이동)
-    isPanto: true
-  });
-  const [searchAddress, SetSearchAddress] = useState();
 
-  // 키워드 입력후 검색 클릭 시 원하는 키워드의 주소로 이동
-  const SearchMap = () => {
-    const ps = new kakao.maps.services.Places();
-    const placesSearchCB = function (data, status, pagination) {
-      if (status === kakao.maps.services.Status.OK) {
-        const newSearch = data[0];
-        setState({
-          center: { lat: newSearch.y, lng: newSearch.x }
-        });
-        console.log(newSearch);
-      }
-    };
-    ps.keywordSearch(`${searchAddress}`, placesSearchCB);
+  // const [searchAddress, setSearchAddress] = useState('');
+  const dispatch = useDispatch();
+  const { markersFromFirebase, isLoadingFromFirebase } = useMarkerFromFirebase();
+  const { searchAddress } = useSelector((state) => state.search);
+  const { refetch, markersFromKaKao, isLoadingFromKakao } = useMarkerFromKaKao({ kakao, searchAddress });
+  const { markers } = useSelector((state) => state.marker);
+
+  const currentMarkers = markersFromKaKao ? markersFromKaKao : markersFromFirebase ? markersFromFirebase : [];
+
+  useEffect(() => {
+    dispatch(setMarkers(currentMarkers));
+  }, [isLoadingFromFirebase, isLoadingFromKakao]);
+
+  console.log(markers);
+  if (isLoadingFromFirebase) {
+    return <h1> 로딩 중... </h1>;
+  }
+
+  const onSearchAddressChangeHandler = (e) => {
+    dispatch(setSearchAddress(e.target.value));
   };
-
-  const handleSearchAddress = (e) => {
-    SetSearchAddress(e.target.value);
-  };
-
+  // console.log('data from firebase : ', markersFromFirebase);
+  // console.log('---------------');
+  // console.log('data from kakaomap search : ', markersFromKaKao);
   return (
-    <>
-      <Map // 지도를 표시할 Container
-        center={state.center}
-        isPanto={state.isPanto}
-        style={{
-          // 지도의 크기
-          width: '100%',
-          height: '450px'
-        }}
-        level={3} // 지도의 확대 레벨
-      >
-        <MapMarker position={state.center}> </MapMarker>
-      </Map>
-      <div>
-        <input onChange={handleSearchAddress}></input>
-        <button onClick={SearchMap}>클릭</button>
-      </div>
-    </>
+    <StHomeContainer>
+      <MapWrapper markers={currentMarkers} />
+      <StMain>
+        <SearchBar>
+          <div>
+            <input onChange={onSearchAddressChangeHandler} placeholder="오늘은 뭘 먹어볼까요?"></input>
+            <button
+              onClick={() => {
+                refetch({ queryKey: ['kakao/places', { kakao, searchAddress }] });
+              }}
+            >
+              <img src={finder} alt="search" />
+            </button>
+          </div>
+        </SearchBar>
+        <CardContainer>
+          <CardList markers={currentMarkers} />
+        </CardContainer>
+      </StMain>
+    </StHomeContainer>
   );
 }
 
 export default Home;
 
-const StMap = styled.div`
-  width: 500px;
-  height: 400px;
+const StHomeContainer = styled.div`
+  display: grid;
+  height: 90vh;
+  grid-template-columns: 600px 1fr;
+`;
+
+const StMain = styled.main`
+  background: #eee;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  height: 90vh;
+  padding: 0 12px;
+`;
+
+const CardContainer = styled.div`
+  overflow-y: scroll;
+  display: flex;
+  //background-color: red;
+  width: 100%;
+  justify-content: center;
+  height: 100%;
 `;
