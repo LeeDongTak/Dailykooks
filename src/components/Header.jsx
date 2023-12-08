@@ -1,10 +1,15 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import bowl from '../assets/bowl.svg';
 function Header() {
+  const navigate = useNavigate();
+  const handleHome = () => {
+    navigate('/');
+  };
   return (
     <StHeader>
-      <div>
+      <div onClick={handleHome}>
         <img src={bowl} />
         <p>데일리국밥</p>
       </div>
@@ -25,6 +30,7 @@ const StHeader = styled.header`
   div {
     display: flex;
     align-items: center;
+    cursor: pointer;
   }
   p {
     background-color: transparent;

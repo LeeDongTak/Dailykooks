@@ -17,7 +17,7 @@ function CardList() {
     return <h1>에러 발생</h1>;
   }
 
-  // console.log(data);
+  //console.log(data);
   // data.forEach((item) => console.log(`위도 : ${item.x} 경도: ${item.y}`));
 
   return (
