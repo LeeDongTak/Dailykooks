@@ -70,7 +70,12 @@ function Detail() {
             <ul>
               {selectedPlace.menus.map((menu, index) => (
                 <li key={index}>
-                  {menu.name} {menu.price}원
+                  <table>
+                    <tr>
+                      <td>{menu.name}</td>
+                      <td>{menu.price}원</td>
+                    </tr>
+                  </table>
                 </li>
               ))}
             </ul>
@@ -103,6 +108,7 @@ export default Detail;
 const DetailBox = styled.div`
   line-height: 1.8rem;
   border-radius: 20px;
+  user-select: none;
   position: absolute;
   left: 50%;
   top: 50%;
@@ -151,6 +157,27 @@ const InfoBox = styled.div`
   padding: 20px;
   background-color: #dbc8b6;
   box-sizing: border-box;
+  ul {
+    li {
+      background-color: #eee5dd;
+      line-height: 2.5rem;
+      margin: 8px 0;
+      border-radius: 8px;
+      width: 350px;
+      padding-left: 10px;
+    }
+  }
+
+  table {
+    width: 100%;
+    td {
+      &:last-of-type {
+        width: 100px;
+        text-align: right;
+        padding-right: 10px;
+      }
+    }
+  }
 `;
 
 const MenuTitle = styled.p`
