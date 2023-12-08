@@ -158,6 +158,7 @@ const InfoBox = styled.div`
   background-color: #dbc8b6;
   box-sizing: border-box;
   ul {
+    overflow: auto;
     li {
       background-color: #eee5dd;
       line-height: 2.5rem;
