@@ -3,13 +3,12 @@ import styled from 'styled-components';
 import bag from '../assets/bag2.svg';
 import clock from '../assets/clock.svg';
 import food from '../assets/food.jpg';
-import menu2 from '../assets/menu.svg';
 import delivery from '../assets/motorsycle2.svg';
 import star from '../assets/star-regular.svg';
 function Card({ place_name, address, number, vote, menus }) {
   const shortAddress = address.split(' ').slice(0, 2).join(' ');
   // const shortAddress = address.split(' ').toString();
-  const menuNames = menus.map((menu) => menu.name);
+  // const menuNames = menus.map((menu) => menu.name);
   // console.log(menuNames);
 
   // console.log(shortAddress, '길이', shortAddress.length);
@@ -20,35 +19,35 @@ function Card({ place_name, address, number, vote, menus }) {
       </BgFrame>
       <div>
         <h3>[ {place_name} ]</h3>
-        <Menu>{menuNames.join(', ')}</Menu>
+        {/* <Menu>{menuNames.join(', ')}</Menu> */}
         <Address>{shortAddress}</Address>
         <Review>
           <span>
-            <img src={star} />
+            <img src={star} alt="" />
             {vote}
           </span>
         </Review>
         <DetailBox>
           <p>
-            <img src={clock} />
+            <img src={clock} alt="" />
             매일 00:00 ~ 24:00
           </p>
 
           <p>
             <img src={bag} />
-            포장 가능, <img src={delivery} />
+            포장 가능, <img src={delivery} alt="" />
             배달 불가
           </p>
-          {menus &&
+          {/* {menus &&
             Object.values(menus).map((menu, idx) => (
               <div key={idx}>
                 <span>
-                  <img src={menu2} />
+                  <img src={menu2} alt="" />
                   {menu.name}
                 </span>
                 <span>{menu.price}</span>
               </div>
-            ))}
+            ))} */}
         </DetailBox>
       </div>
       <button>상세 보기</button>

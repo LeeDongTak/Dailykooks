@@ -1,10 +1,15 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import bowl from '../assets/bowl.svg';
 function Header() {
+  const navigate = useNavigate();
+  const onLogoClickHandler = () => {
+    navigate('/');
+  };
   return (
     <StHeader>
-      <div>
+      <div onClick={onLogoClickHandler}>
         <img src={bowl} />
         <p>데일리국밥</p>
       </div>
@@ -25,12 +30,14 @@ const StHeader = styled.header`
   div {
     display: flex;
     align-items: center;
+    cursor: pointer;
   }
   p {
     background-color: transparent;
-    font-size: 30px;
+    font-size: 32px;
     color: #866761;
-    font-weight: bold;
+    /* font-weight: 900; */
+    font-variation-settings: 'wght' 900;
     user-select: none;
     border: none;
     margin-left: 6px;

@@ -1,40 +1,37 @@
-import { useQuery } from '@tanstack/react-query';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { getPlaces } from '../api/places';
 import Card from './Card';
 
-function CardList() {
-  const { isLoading, isError, data, error } = useQuery(['places'], getPlaces);
-
-  if (isLoading) {
-    // console.log(isLoading);
-    return <h1> 로딩 중... </h1>;
-  }
-
-  if (isError) {
-    // console.log(error);
-    return <h1>에러 발생</h1>;
-  }
-
-  // console.log(data);
-  // data.forEach((item) => console.log(`위도 : ${item.x} 경도: ${item.y}`));
+function CardList({ markers }) {
+  const { kakao } = window;
+  const { selectedMarker } = useSelector((state) => state.search);
 
   return (
-    <StCardList>
-      {data.map((item) => (
-        <Card
-          key={item.id}
-          place_name={item.place_name}
-          address={item.address}
-          number={item.number}
-          vote={item.vote}
-          menus={item.menus}
-          x={item.x}
-          y={item.y}
-        />
-      ))}
-    </StCardList>
+    <>
+      {markers
+        .filter((item) => item.id === selectedMarker)
+        .map((item) => (
+          <div>
+            <p>{item.id}</p>
+            <p>{item.name}</p>
+          </div>
+        ))}
+      <StCardList>
+        {markers.map((item) => (
+          <Card
+            key={item.id}
+            place_name={item.place_name}
+            address={item.road_address_name}
+            number={item.phone}
+            // vote={item.vote}
+            // menus={item.menus}
+            x={item.x}
+            y={item.y}
+          />
+        ))}
+      </StCardList>
+    </>
   );
 }
 

@@ -1,11 +1,14 @@
 import React, { useRef, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { setHoveredMarker, setSelectedMarker } from '../redux/modules/markerSlice';
 
-function MapWrapper({ searchAddress, SetSearchAddress, markers }) {
-  const { kakao } = window;
+function MapWrapper({ markers }) {
   const mapRef = useRef(null);
   const markerRef = useRef(null);
+  const dispatch = useDispatch();
+  const { hoveredMarker, selectedMarker } = useSelector((state) => state.marker);
   // console.log('current markers is : ', markers);
 
   const [state, setState] = useState({
@@ -19,17 +22,20 @@ function MapWrapper({ searchAddress, SetSearchAddress, markers }) {
 
   //마커에 마우스 오버 할때 쓰는 state
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedMarker, setSelectedMarker] = useState('');
 
-  const onMarkerMouseEventHandler = (id, event) => {
-    if (event === 'over') {
+  const onMarkerMouseEventHandler = (id, eventType) => {
+    if (eventType === 'over') {
       setIsOpen(true);
-      setSelectedMarker(id);
+      dispatch(setHoveredMarker(id));
     }
-    if (event === 'out') {
+    if (eventType === 'out') {
       setIsOpen(false);
     }
     // console.log(id);
+  };
+  const onMarkerClickHandler = (id) => {
+    alert(id);
+    dispatch(setSelectedMarker(id));
   };
 
   return (
@@ -41,29 +47,27 @@ function MapWrapper({ searchAddress, SetSearchAddress, markers }) {
       style={{ width: '600', height: '600' }} // 지도의 확대 레벨
     >
       {markers?.map((item) => (
-        <MapMarker // 인포윈도우를 생성하고 지도에 표시합니다
+        <StMapMarker // 인포윈도우를 생성하고 지도에 표시합니다
           key={`${item.id}`}
           position={{ lat: parseFloat(item.y), lng: parseFloat(item.x) }}
           clickable={true}
           // onMouseOver={() => setIsOpen(true)}
           onMouseOver={() => onMarkerMouseEventHandler(item.id, 'over')}
           onMouseOut={() => onMarkerMouseEventHandler(item.id, 'out')}
+          onClick={() => onMarkerClickHandler(item.id)}
         >
-          {isOpen && item.id === selectedMarker && (
+          {isOpen && item.id === hoveredMarker && (
             <div style={{ padding: '5px', color: '#000' }}>
               <p>{item?.place_name}</p>
               <p>{item?.phone}</p>
             </div>
           )}
-        </MapMarker>
+        </StMapMarker>
       ))}
     </Map>
   );
 }
-function tab(x) {
-  console.log(x);
-  return x;
-}
+
 export default MapWrapper;
 
 const StMapWrapper = styled.section`
@@ -73,4 +77,8 @@ const StMapWrapper = styled.section`
 const StMap = styled(Map)`
   width: 100%;
   height: 90vh;
+`;
+
+const StMapMarker = styled(MapMarker)`
+  cursor: pointer;
 `;

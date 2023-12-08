@@ -17,7 +17,7 @@ export default function useMarkerFromKaKao({ kakao, searchAddress }) {
   return { markersFromKaKao: data, isLoading, isError, error, refetch };
 }
 
-export const MarkerFromFirebaseProvider = ({ children }) => {
+export const MarkerFromKakaoProvider = ({ children }) => {
   return <QueryClientProvider client={new QueryClient()}>{children}</QueryClientProvider>;
 };
 
