@@ -21,7 +21,7 @@ function Card({ place_name, address, number, vote, menus }) {
       <div>
         <h3>[ {place_name} ]</h3>
         <Menu>{menuNames.join(', ')}</Menu>
-        <p>{shortAddress}</p>
+        <Address>{shortAddress}</Address>
         <Review>
           <span>
             <img src={star} />
@@ -197,4 +197,8 @@ const BgFrame = styled.div`
   position: absolute;
   width: 380px;
   height: 250px;
+`;
+
+const Address = styled.p`
+  text-align: center;
 `;
