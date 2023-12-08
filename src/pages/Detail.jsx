@@ -58,10 +58,12 @@ function Detail() {
               {selectedMarker.menus?.map((menu, index) => (
                 <li key={index}>
                   <table>
-                    <tr>
-                      <td>{menu?.name}</td>
-                      <td>{menu?.price}원</td>
-                    </tr>
+                    <tbody>
+                      <tr>
+                        <td>{menu?.name}</td>
+                        <td>{menu?.price}원</td>
+                      </tr>
+                    </tbody>
                   </table>
                 </li>
               ))}
