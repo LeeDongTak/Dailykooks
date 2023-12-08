@@ -4,10 +4,11 @@ import { StaticMap } from 'react-kakao-maps-sdk';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { getPlaces } from '../api/places';
+import clock from '../assets/clock.svg';
 import location from '../assets/location_icon.svg';
 import menu2 from '../assets/menu.svg';
 import phone from '../assets/phone.svg';
-import star from '../assets/star-regular.svg';
+import star from '../assets/star2.svg';
 function Detail() {
   const { id } = useParams();
 
@@ -36,90 +37,136 @@ function Detail() {
 
   return (
     <DetailPage>
-      <h1>{selectedPlace.place_name}</h1>
-      <InfoBox>
-        <p>
-          <img src={location} />
-          {selectedPlace.road_address_name}
-        </p>
-        <p>
-          <img src={phone} />
-          {selectedPlace.phone}
-        </p>
-        <p>
-          <img src={star} /> {selectedPlace.vote}
-        </p>
-        <ul>
-          {selectedPlace.menus.map((menu, index) => (
-            <li key={index}>
+      <DetailBox>
+        <h1>[ {selectedPlace.place_name} ]</h1>
+
+        <InfoBoxFrame>
+          <InfoBox>
+            <p>
+              {' '}
+              <img src={location} />
+              {selectedPlace.road_address_name}
+            </p>
+            <hr />
+            <p>
+              <img src={clock} alt="" />
+              매일 00:00 ~ 24:00
+            </p>
+            <hr />
+            <p>
+              <img src={phone} />
+              {selectedPlace.phone}
+            </p>
+            <hr />
+            <p>
+              <img src={star} />
+              {selectedPlace.vote}
+            </p>
+            <hr />
+            <MenuTitle>
               <img src={menu2} />
-              {menu.name} {menu.price}원
-            </li>
-          ))}
-        </ul>
-      </InfoBox>
-      <Map // 지도를 표시할 Container
-        center={{
-          // 지도의 중심좌표
-          lat: yLoc,
-          lng: xLoc
-        }}
-        style={{
-          // 지도의 크기
-          width: '500px',
-          height: '350px'
-        }}
-        marker={{
-          lat: yLoc,
-          lng: xLoc
-        }}
-        level={3} // 지도의 확대 레벨
-      />
+              메뉴
+            </MenuTitle>
+            <ul>
+              {selectedPlace.menus.map((menu, index) => (
+                <li key={index}>
+                  {menu.name} {menu.price}원
+                </li>
+              ))}
+            </ul>
+          </InfoBox>
+          <Map // 지도를 표시할 Container
+            center={{
+              // 지도의 중심좌표
+              lat: yLoc,
+              lng: xLoc
+            }}
+            style={{
+              // 지도의 크기
+              width: '500px',
+              height: '500px'
+            }}
+            marker={{
+              lat: yLoc,
+              lng: xLoc
+            }}
+            level={3} // 지도의 확대 레벨
+          />
+        </InfoBoxFrame>
+      </DetailBox>
     </DetailPage>
   );
 }
 
 export default Detail;
 
-const DetailPage = styled.div`
+const DetailBox = styled.div`
   line-height: 1.8rem;
   border-radius: 20px;
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  display: flex;
-  flex-wrap: wrap;
-  width: 1000px;
+
+  width: 900px;
 
   img {
     height: 25px;
     vertical-align: middle;
-    margin-right: 3px;
+    margin-right: 10px;
   }
   h1 {
-    font-size: 26px;
+    font-size: 27px;
     text-align: center;
     width: 100%;
+    color: #866761;
     font-family: 'TheJamsil5Bold';
     font-weight: bold;
     margin-bottom: 20px;
+  }
+
+  hr {
+    border: 0;
+    height: 1px;
+    background: #eee5dd;
+  }
+
+  p {
+    color: #866761;
+    font-weight: bold;
   }
 `;
 
 const Map = styled(StaticMap)`
   box-sizing: border-box;
-  border-top-right-radius: 20px;
-  border-bottom-right-radius: 20px;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
   // border: 5px solid #dbc8b6;
-  // box-shadow: 1px 1px 6px #aaa;
 `;
 
 const InfoBox = styled.div`
-  background-color: #eee;
   width: 400px;
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
   padding: 20px;
+  background-color: #dbc8b6;
   box-sizing: border-box;
+`;
+
+const MenuTitle = styled.p`
+  font-weight: bold;
+  color: #866761;
+`;
+
+const InfoBoxFrame = styled.div`
+  box-shadow: 2px 2px 8px #aaa;
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 15px;
+`;
+
+const DetailPage = styled.div`
+  background-color: #eee;
+  width: 100vw;
+  height: calc(100vh - 80px);
 `;
