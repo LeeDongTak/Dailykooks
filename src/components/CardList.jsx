@@ -32,6 +32,7 @@ function CardList() {
           menus={item.menus}
           x={item.x}
           y={item.y}
+          id={item.id}
         />
       ))}
     </StCardList>

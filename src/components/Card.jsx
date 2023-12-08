@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import bag from '../assets/bag2.svg';
 import clock from '../assets/clock.svg';
@@ -6,7 +7,8 @@ import food from '../assets/food.jpg';
 import menu2 from '../assets/menu.svg';
 import delivery from '../assets/motorsycle2.svg';
 import star from '../assets/star-regular.svg';
-function Card({ place_name, address, number, vote, menus }) {
+function Card({ place_name, address, number, vote, menus, id }) {
+  const navigate = useNavigate();
   const shortAddress = address.split(' ').slice(0, 2).join(' ');
   // const shortAddress = address.split(' ').toString();
   const menuNames = menus.map((menu) => menu.name);
@@ -51,7 +53,7 @@ function Card({ place_name, address, number, vote, menus }) {
             ))}
         </DetailBox>
       </div>
-      <button>상세 보기</button>
+      <button onClick={() => navigate(`/places/${id}`)}>상세 보기</button>
     </StCardWrapper>
   );
 }
