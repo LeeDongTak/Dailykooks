@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import bag from '../assets/bag2.svg';
 import clock from '../assets/clock.svg';
-import food from '../assets/food.jpg';
+import { default as bg, default as food } from '../assets/food.jpg';
 import menu2 from '../assets/menu.svg';
 import delivery from '../assets/motorsycle2.svg';
 import star from '../assets/star-regular.svg';
@@ -52,7 +52,7 @@ function Card({ place_name, address, number, vote, menus, id }) {
   return (
     <StCardWrapper>
       <BgFrame>
-        <Bg src="https://cdn.pixabay.com/photo/2016/09/07/10/15/food-1651279_1280.jpg" />
+        <Bg src={bg} />
       </BgFrame>
       <div>
         <h3>[ {place_name} ]</h3>

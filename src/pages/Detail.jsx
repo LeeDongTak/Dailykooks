@@ -22,6 +22,8 @@ function Detail() {
   const xLoc = Number(selectedMarker.x);
   const yLoc = Number(selectedMarker.y);
 
+  console.log(selectedMarker.vote);
+  console.log(selectedMarker.menus);
   return (
     <DetailPage>
       <DetailBox>
@@ -44,28 +46,39 @@ function Detail() {
               {selectedMarker.phone}
             </p>
             <hr />
-            <p>
-              <img src={star} />
-              {selectedMarker?.vote}
-            </p>
+            {selectedMarker.vote !== undefined ? (
+              <p>
+                <img src={star} alt="" />
+                {selectedMarker?.vote}
+              </p>
+            ) : (
+              <p>
+                <img src={star} alt="" />
+                평점정보가 없습니다.
+              </p>
+            )}
             <hr />
             <MenuTitle>
               <img src={menu2} />
               메뉴
             </MenuTitle>
             <ul>
-              {selectedMarker.menus?.map((menu, index) => (
-                <li key={index}>
-                  <table>
-                    <tbody>
-                      <tr>
-                        <td>{menu?.name}</td>
-                        <td>{menu?.price}원</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </li>
-              ))}
+              {selectedMarker.menus ? (
+                selectedMarker.menus.map((menu, index) => (
+                  <li key={index}>
+                    <table>
+                      <tbody>
+                        <tr>
+                          <td>{menu?.name}</td>
+                          <td>{menu?.price}원</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </li>
+                ))
+              ) : (
+                <li>메뉴정보가 없습니다.</li>
+              )}
             </ul>
           </InfoBox>
           <Map // 지도를 표시할 Container
