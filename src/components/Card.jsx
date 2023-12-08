@@ -1,6 +1,8 @@
 import React from 'react';
+import { ImEnlarge2 } from 'react-icons/im';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+
 import styled from 'styled-components';
 import bag from '../assets/bag2.svg';
 import clock from '../assets/clock.svg';
@@ -8,7 +10,19 @@ import food from '../assets/food.jpg';
 import delivery from '../assets/motorsycle2.svg';
 import star from '../assets/star-regular.svg';
 import { setSelectedMarker } from '../redux/modules/markerSlice';
-
+const Enlarge = styled(ImEnlarge2)`
+  border: none;
+  padding: 10px;
+  position: absolute;
+  cursor: pointer;
+  right: 0;
+  font-weight: bold;
+  margin: 5px;
+  bottom: 0;
+  font-size: 20px;
+  background-color: transparent;
+  display: none;
+`;
 function Card({ place_name, address, number, vote, menus, id }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -65,11 +79,11 @@ function Card({ place_name, address, number, vote, menus, id }) {
             ))} */}
         </DetailBox>
       </div>
-      <button onClick={onGotoDetailBtnClickHandler}>상세 보기</button>
+      <Enlarge onClick={onGotoDetailBtnClickHandler} />
+      {/*<button onClick={onGotoDetailBtnClickHandler}>상세 보기</button>*/}
     </StCardWrapper>
   );
 }
-
 export default Card;
 const DetailBox = styled.div`
   height: 105px;
@@ -151,6 +165,12 @@ const StCardWrapper = styled.li`
 
   &:hover ${DetailBox} {
     transform: translate(0, 0px);
+  }
+
+  &:hover {
+    ${Enlarge} {
+      display: block;
+    }
   }
 
   @media screen and (max-width: 1883px) {
