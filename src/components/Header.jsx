@@ -28,9 +28,10 @@ const StHeader = styled.header`
   }
   p {
     background-color: transparent;
-    font-size: 20px;
+    font-size: 30px;
     color: #866761;
     font-weight: bold;
+    user-select: none;
     border: none;
     margin-left: 6px;
   }
