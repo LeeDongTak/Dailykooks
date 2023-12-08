@@ -17,10 +17,11 @@ const markerSlice = createSlice({
       state.hoveredMarkerId = action.payload;
     },
     setSelectedMarker: (state, action) => {
-      const selectedId = action.payload;
-      const marker = state.markers.find((item) => item?.id === selectedId);
+      const { markers, id } = action.payload;
+      // console.log(markers);
+      const marker = markers.find((item) => item?.id === id);
       state.selectedMarker = marker;
-      console.log(state.selectedMarker);
+      // console.log(state.selectedMarker);
     }
   }
 });

@@ -12,7 +12,7 @@ function Detail() {
   const { selectedMarker } = useSelector((state) => state.marker);
   const { id } = useParams();
 
-  console.log(selectedMarker);
+  // console.log(selectedMarker);
   if (!selectedMarker) {
     return <p>페이지를 찾을수 없습니다.</p>;
   }

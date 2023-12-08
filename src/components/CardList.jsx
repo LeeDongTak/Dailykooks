@@ -1,10 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
+import useMarker from '../hooks/useMarker';
 import Card from './Card';
 
 function CardList() {
-  const { markers } = useSelector((state) => state.marker);
+  const { kakao } = window;
+  const { searchAddress } = useSelector((state) => state.search);
+  const { markers } = useMarker({ kakao, searchAddress });
   const { selectedMarker } = useSelector((state) => state.marker);
 
   return (

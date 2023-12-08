@@ -1,45 +1,35 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import finder from '../assets/finder.svg';
 import CardList from '../components/CardList';
 import MapWrapper from '../components/MapWrapper';
 import SearchBar from '../components/SearchBar';
-import useMarkerFromFirebase from '../hooks/useMarkerFromFirebase';
-import useMarkerFromKaKao from '../hooks/useMarkerFromKakao';
-import { setMarkers } from '../redux/modules/markerSlice';
+import useMarker from '../hooks/useMarker';
 import { setSearchAddress } from '../redux/modules/searchSlice';
 
 function Home() {
   const { kakao } = window;
-
-  // const [searchAddress, setSearchAddress] = useState('');
   const dispatch = useDispatch();
-  const { markersFromFirebase, isLoadingFromFirebase } = useMarkerFromFirebase();
   const { searchAddress } = useSelector((state) => state.search);
-  const { refetch, markersFromKaKao, isLoadingFromKakao } = useMarkerFromKaKao({ kakao, searchAddress });
-  const { markers } = useSelector((state) => state.marker);
+  const { refetch, markers, isLoadingFromFirebase, isLoadingFromKakao } = useMarker({ kakao, searchAddress });
 
-  const currentMarkers = markersFromKaKao ? markersFromKaKao : markersFromFirebase ? markersFromFirebase : [];
-
-  useEffect(() => {
-    dispatch(setMarkers(currentMarkers));
-  }, [isLoadingFromFirebase, isLoadingFromKakao]);
-
-  console.log(markers);
   if (isLoadingFromFirebase) {
     return <h1> 로딩 중... </h1>;
   }
+  console.log(markers);
 
   const onSearchAddressChangeHandler = (e) => {
     dispatch(setSearchAddress(e.target.value));
   };
-  // console.log('data from firebase : ', markersFromFirebase);
+
+  // console.log('data from firebase : ');
   // console.log('---------------');
-  // console.log('data from kakaomap search : ', markersFromKaKao);
+  // console.log('data from kakaomap search : ');
+
   return (
     <StHomeContainer>
-      <MapWrapper markers={currentMarkers} />
+      <MapWrapper markers={markers} />
       <StMain>
         <SearchBar>
           <div>
@@ -54,7 +44,7 @@ function Home() {
           </div>
         </SearchBar>
         <CardContainer>
-          <CardList markers={currentMarkers} />
+          <CardList markers={markers} />
         </CardContainer>
       </StMain>
     </StHomeContainer>

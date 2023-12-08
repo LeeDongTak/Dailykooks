@@ -23,7 +23,6 @@ export const MarkerFromKakaoProvider = ({ children }) => {
 
 const fetchMarkerByAddress = async ({ queryKey }) => {
   const [_key, { kakao, searchAddress }] = queryKey;
-  console.log(kakao, searchAddress);
   return new Promise((resolve, reject) => {
     const placeSearchInstance = new kakao.maps.services.Places();
     const searchCallBackFunc = function (data, status) {
