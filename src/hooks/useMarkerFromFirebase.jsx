@@ -1,4 +1,4 @@
-import { QueryClientProvider, useQuery } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 import { getPlaces } from '../api/places';
 
 export default function useMarkerFromFirebase() {
@@ -12,5 +12,5 @@ export default function useMarkerFromFirebase() {
 }
 
 export const MarkerFromFirebaseProvider = ({ children }) => {
-  return <QueryClientProvider>{children}</QueryClientProvider>;
+  return <QueryClientProvider client={new QueryClient()}>{children}</QueryClientProvider>;
 };

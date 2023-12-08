@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import finder from '../assets/finder.svg';
 import CardList from '../components/CardList';
@@ -6,13 +7,15 @@ import MapWrapper from '../components/MapWrapper';
 import SearchBar from '../components/SearchBar';
 import useMarkerFromFirebase from '../hooks/useMarkerFromFirebase';
 import useMarkerFromKaKao from '../hooks/useMarkerFromKakao';
+import { setSearchAddress } from '../redux/modules/searchSlice';
 
 function Home() {
   const { kakao } = window;
 
-  const [searchAddress, setSearchAddress] = useState('');
-
+  // const [searchAddress, setSearchAddress] = useState('');
+  const dispatch = useDispatch();
   const { markersFromFirebase } = useMarkerFromFirebase();
+  const { searchAddress } = useSelector((state) => state.search);
   const { refetch, markersFromKaKao } = useMarkerFromKaKao({ kakao, searchAddress });
 
   // setMarkers([...data]);
@@ -20,16 +23,14 @@ function Home() {
   // 키워드 입력후 검색 클릭 시 원하는 키워드의 주소로 이동
 
   const onSearchAddressChangeHandler = (e) => {
-    setSearchAddress(e.target.value);
+    dispatch(setSearchAddress(e.target.value));
   };
-
+  console.log('data from firebase : ', markersFromFirebase);
+  console.log('---------------');
+  console.log('data from kakaomap search : ', markersFromKaKao);
   return (
     <StHomeContainer>
-      <MapWrapper
-        searchAddress={searchAddress}
-        SetSearchAddress={setSearchAddress}
-        markers={markersFromKaKao ? markersFromKaKao : markersFromFirebase ? markersFromFirebase : []}
-      />
+      <MapWrapper markers={markersFromKaKao ? markersFromKaKao : markersFromFirebase ? markersFromFirebase : []} />
       <StMain>
         <SearchBar>
           <div>
@@ -44,7 +45,7 @@ function Home() {
           </div>
         </SearchBar>
         <CardContainer>
-          <CardList />
+          <CardList markers={markersFromKaKao ? markersFromKaKao : markersFromFirebase ? markersFromFirebase : []} />
         </CardContainer>
       </StMain>
     </StHomeContainer>

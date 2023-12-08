@@ -4,12 +4,12 @@ import styled from 'styled-components';
 import bowl from '../assets/bowl.svg';
 function Header() {
   const navigate = useNavigate();
-  const handleHome = () => {
+  const onLogoClickHandler = () => {
     navigate('/');
   };
   return (
     <StHeader>
-      <div onClick={handleHome}>
+      <div onClick={onLogoClickHandler}>
         <img src={bowl} />
         <p>데일리국밥</p>
       </div>
@@ -34,10 +34,10 @@ const StHeader = styled.header`
   }
   p {
     background-color: transparent;
-
     font-size: 30px;
     color: #866761;
-    font-weight: bold;
+    /* font-weight: 900; */
+    font-variation-settings: 'wght' 900;
     user-select: none;
     border: none;
     margin-left: 6px;

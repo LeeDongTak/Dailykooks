@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import template from '../modules/templateSlice';
+import markerReducer from '../modules/markerSlice';
+import searchReducer from '../modules/searchSlice';
 
 const store = configureStore({
-  reducer: { template },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: false
-    })
+  reducer: {
+    marker: markerReducer,
+    search: searchReducer
+  }
 });
 
 export default store;
