@@ -1,10 +1,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import finder from '../assets/finder.svg';
 import CardList from '../components/CardList';
 import MapWrapper from '../components/MapWrapper';
-import SearchBar from '../components/SearchBar';
 import useMarker from '../hooks/useMarker';
 import { setSearchAddress } from '../redux/modules/searchSlice';
 
@@ -14,7 +12,7 @@ function Home() {
   const { searchAddress } = useSelector((state) => state.search);
   const { refetch, markers, isLoadingFromFirebase, isLoadingFromKakao } = useMarker({ kakao, searchAddress });
 
-  if (isLoadingFromFirebase) {
+  if (!markers && isLoadingFromKakao) {
     return <h1> 로딩 중... </h1>;
   }
   console.log(markers);
@@ -31,7 +29,7 @@ function Home() {
     <StHomeContainer>
       <MapWrapper markers={markers} />
       <StMain>
-        <SearchBar>
+        {/* <SearchBar>
           <div>
             <input onChange={onSearchAddressChangeHandler} placeholder="오늘은 뭘 먹어볼까요?"></input>
             <button
@@ -42,7 +40,7 @@ function Home() {
               <img src={finder} alt="search" />
             </button>
           </div>
-        </SearchBar>
+        </SearchBar> */}
         <CardContainer>
           <CardList markers={markers} />
         </CardContainer>

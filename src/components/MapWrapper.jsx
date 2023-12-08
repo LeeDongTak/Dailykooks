@@ -1,9 +1,10 @@
-import React, { useRef, useState } from 'react';
-import { Map, MapMarker } from 'react-kakao-maps-sdk';
+import React, { useMemo, useRef, useState } from 'react';
+import { Map, MapMarker, MarkerClusterer } from 'react-kakao-maps-sdk';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import useMarker from '../hooks/useMarker';
 import { setHoveredMarker, setSelectedMarker } from '../redux/modules/markerSlice';
+import SearchBar from './SearchBar';
 
 function MapWrapper() {
   const { kakao } = window;
@@ -12,17 +13,19 @@ function MapWrapper() {
   const { searchAddress } = useSelector((state) => state.search);
   const { markers } = useMarker({ kakao, searchAddress });
   const { hoveredMarkerId } = useSelector((state) => state.marker);
-  const [state, setState] = useState({
-    // 지도의 초기 위치
-    center: [],
-    // 지도 위치 변경시 panto를 이용할지(부드럽게 이동)
-    isPanto: true,
-
-    markerData: null
-  });
-
-  //마커에 마우스 오버 할때 쓰는 state
   const [isOpen, setIsOpen] = useState(false);
+
+  const bounds = useMemo(() => {
+    const bounds = new kakao.maps.LatLngBounds();
+    markers.forEach((marker) => {
+      bounds.extend(new kakao.maps.LatLng(marker.y, marker.x));
+    });
+  }, [markers]);
+
+  // useEffect(() => {
+  //   const map = mapRef.current;
+  //   if (map) map.setBounds(bounds);
+  // }, [markers]);
 
   const onMarkerMouseEventHandler = (id, eventType) => {
     if (eventType === 'over') {
@@ -38,44 +41,50 @@ function MapWrapper() {
   };
 
   return (
-    <Map // 지도를 표시할 Container
-      center={{ lat: 37.49676871972202, lng: 127.02474726969814 }}
-      // isPanto={state.isPanto}
-      ref={mapRef}
-      level={13}
-      style={{ width: '600', height: '600' }} // 지도의 확대 레벨
-    >
-      {markers?.map((item) => (
-        <StMapMarker // 인포윈도우를 생성하고 지도에 표시합니다
-          key={`${item.id}`}
-          position={{ lat: parseFloat(item.y), lng: parseFloat(item.x) }}
-          clickable={true}
-          // onMouseOver={() => setIsOpen(true)}
-          onMouseOver={() => onMarkerMouseEventHandler(item.id, 'over')}
-          onMouseOut={() => onMarkerMouseEventHandler(item.id, 'out')}
-          onClick={() => onMarkerClickHandler(item.id)}
-        >
-          {isOpen && item.id === hoveredMarkerId && (
-            <div style={{ padding: '5px', color: '#000' }}>
-              <p>{item?.place_name}</p>
-              <p>{item?.phone}</p>
-            </div>
-          )}
-        </StMapMarker>
-      ))}
-    </Map>
+    <StMapContainer>
+      <SearchBar />
+      <StMap // 지도를 표시할 Container
+        center={{ lat: 37.49676871972202, lng: 127.02474726969814 }}
+        isPanto={true}
+        ref={mapRef}
+        level={13}
+        // style={{ width: '600', height: '600' }}
+      >
+        <MarkerClusterer averageCenter={true} minLevel={10}>
+          {markers?.map((item) => (
+            <StMapMarker // 인포윈도우를 생성하고 지도에 표시합니다
+              key={`${item.id}`}
+              position={{ lat: parseFloat(item.y), lng: parseFloat(item.x) }}
+              clickable={true}
+              // onMouseOver={() => setIsOpen(true)}
+              onMouseOver={() => onMarkerMouseEventHandler(item.id, 'over')}
+              onMouseOut={() => onMarkerMouseEventHandler(item.id, 'out')}
+              onClick={() => onMarkerClickHandler(item.id)}
+            >
+              {isOpen && item.id === hoveredMarkerId && (
+                <div style={{ padding: '5px', color: '#000' }}>
+                  <p>{item?.place_name}</p>
+                  <p>{item?.phone}</p>
+                </div>
+              )}
+            </StMapMarker>
+          ))}
+        </MarkerClusterer>
+      </StMap>
+    </StMapContainer>
   );
 }
 
 export default MapWrapper;
 
-const StMapWrapper = styled.section`
+const StMapContainer = styled.section`
   width: 100%;
   height: 100%;
 `;
 const StMap = styled(Map)`
   width: 100%;
   height: 90vh;
+  position: relative;
 `;
 
 const StMapMarker = styled(MapMarker)`
