@@ -22,6 +22,7 @@ const Enlarge = styled(ImEnlarge2)`
   font-size: 20px;
   background-color: transparent;
   display: none;
+  color: #866761;
 `;
 function Card({ place_name, address, number, vote, menus, id }) {
   const navigate = useNavigate();
