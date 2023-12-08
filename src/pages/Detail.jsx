@@ -37,26 +37,28 @@ function Detail() {
   return (
     <DetailPage>
       <h1>{selectedPlace.place_name}</h1>
-      <p>
-        <img src={location} />
-        {selectedPlace.road_address_name}
-      </p>
-      <p>
-        <img src={phone} />
-        {selectedPlace.phone}
-      </p>
-      <p>
-        <img src={star} /> {selectedPlace.vote}
-      </p>
-      <ul>
-        {selectedPlace.menus.map((menu, index) => (
-          <li key={index}>
-            <img src={menu2} />
-            {menu.name} {menu.price}원
-          </li>
-        ))}
-      </ul>
-      <StaticMap // 지도를 표시할 Container
+      <InfoBox>
+        <p>
+          <img src={location} />
+          {selectedPlace.road_address_name}
+        </p>
+        <p>
+          <img src={phone} />
+          {selectedPlace.phone}
+        </p>
+        <p>
+          <img src={star} /> {selectedPlace.vote}
+        </p>
+        <ul>
+          {selectedPlace.menus.map((menu, index) => (
+            <li key={index}>
+              <img src={menu2} />
+              {menu.name} {menu.price}원
+            </li>
+          ))}
+        </ul>
+      </InfoBox>
+      <Map // 지도를 표시할 Container
         center={{
           // 지도의 중심좌표
           lat: yLoc,
@@ -64,7 +66,7 @@ function Detail() {
         }}
         style={{
           // 지도의 크기
-          width: '800px',
+          width: '500px',
           height: '350px'
         }}
         marker={{
@@ -81,13 +83,43 @@ export default Detail;
 
 const DetailPage = styled.div`
   line-height: 1.8rem;
+  border-radius: 20px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-wrap: wrap;
+  width: 1000px;
+
   img {
     height: 25px;
     vertical-align: middle;
     margin-right: 3px;
   }
   h1 {
-    font-size: 22px;
+    font-size: 26px;
+    text-align: center;
+    width: 100%;
+    font-family: 'TheJamsil5Bold';
     font-weight: bold;
+    margin-bottom: 20px;
   }
+`;
+
+const Map = styled(StaticMap)`
+  box-sizing: border-box;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  // border: 5px solid #dbc8b6;
+  // box-shadow: 1px 1px 6px #aaa;
+`;
+
+const InfoBox = styled.div`
+  background-color: #eee;
+  width: 400px;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  padding: 20px;
+  box-sizing: border-box;
 `;

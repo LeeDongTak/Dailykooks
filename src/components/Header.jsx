@@ -34,6 +34,7 @@ const StHeader = styled.header`
   }
   p {
     background-color: transparent;
+
     font-size: 30px;
     color: #866761;
     font-weight: bold;
