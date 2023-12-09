@@ -8,6 +8,7 @@ import location from '../assets/location_icon.svg';
 import menu2 from '../assets/menu.svg';
 import phone from '../assets/phone.svg';
 import star from '../assets/star2.svg';
+import CommentsList from '../components/CommentsList';
 function Detail() {
   const { selectedMarker } = useSelector((state) => state.marker);
   const { id } = useParams();
@@ -100,20 +101,29 @@ function Detail() {
           />
         </InfoBoxFrame>
       </DetailBox>
+      <CommentsList markerId={selectedMarker.id} />
     </DetailPage>
   );
 }
 
 export default Detail;
 
+const DetailPage = styled.div`
+  background-color: #eee;
+  width: 100vw;
+  /* height: calc(100vh - 80px); */
+`;
+
 const DetailBox = styled.div`
   line-height: 1.8rem;
   border-radius: 20px;
   user-select: none;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  position: relative;
+  padding: 24px;
+  margin: 0 auto;
+  /* left: 50%; */
+  /* top: 50%; */
+  /* transform: translate(-50%, -50%); */
 
   width: 900px;
 
@@ -193,10 +203,4 @@ const InfoBoxFrame = styled.div`
   display: flex;
   flex-wrap: wrap;
   border-radius: 15px;
-`;
-
-const DetailPage = styled.div`
-  background-color: #eee;
-  width: 100vw;
-  height: calc(100vh - 80px);
 `;

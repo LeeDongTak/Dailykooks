@@ -2,7 +2,7 @@ import React, { useMemo, useRef, useState } from 'react';
 import { Map, MapMarker, MarkerClusterer } from 'react-kakao-maps-sdk';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import useMarker from '../hooks/useMarker';
+import useMarkerFromFirebase from '../hooks/useMarkerFromFirebase';
 import { setHoveredMarker, setSelectedMarker } from '../redux/modules/markerSlice';
 import SearchBar from './SearchBar';
 
@@ -11,13 +11,14 @@ function MapWrapper() {
   const mapRef = useRef(null);
   const dispatch = useDispatch();
   const { searchAddress } = useSelector((state) => state.search);
-  const { markers } = useMarker({ kakao, searchAddress });
+  // const { markers } = useMarker({ kakao, searchAddress });
+  const { markersFromFirebase: markers } = useMarkerFromFirebase(searchAddress);
   const { hoveredMarkerId } = useSelector((state) => state.marker);
   const [isOpen, setIsOpen] = useState(false);
 
   const bounds = useMemo(() => {
     const bounds = new kakao.maps.LatLngBounds();
-    markers.forEach((marker) => {
+    markers?.forEach((marker) => {
       bounds.extend(new kakao.maps.LatLng(marker.y, marker.x));
     });
   }, [markers]);

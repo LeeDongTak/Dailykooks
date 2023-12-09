@@ -1,25 +1,21 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import CardList from '../components/CardList';
 import MapWrapper from '../components/MapWrapper';
-import useMarker from '../hooks/useMarker';
-import { setSearchAddress } from '../redux/modules/searchSlice';
+import { CommentsProvider } from '../hooks/useComments';
+import useMarkerFromFirebase from '../hooks/useMarkerFromFirebase';
 
 function Home() {
-  const { kakao } = window;
-  const dispatch = useDispatch();
+  // const { kakao } = window;
   const { searchAddress } = useSelector((state) => state.search);
-  const { refetch, markers, isLoadingFromFirebase, isLoadingFromKakao } = useMarker({ kakao, searchAddress });
+  // const { refetch, markers, isLoadingFromFirebase, isLoadingFromKakao } = useMarker({ kakao, searchAddress });
+  const { markersFromFirebase: markers, isLoadingFromFirebase } = useMarkerFromFirebase(searchAddress);
 
-  if (!markers && isLoadingFromKakao) {
+  if (isLoadingFromFirebase) {
     return <h1> 로딩 중... </h1>;
   }
   console.log(markers);
-
-  const onSearchAddressChangeHandler = (e) => {
-    dispatch(setSearchAddress(e.target.value));
-  };
 
   // console.log('data from firebase : ');
   // console.log('---------------');
@@ -29,21 +25,11 @@ function Home() {
     <StHomeContainer>
       <MapWrapper markers={markers} />
       <StMain>
-        {/* <SearchBar>
-          <div>
-            <input onChange={onSearchAddressChangeHandler} placeholder="오늘은 뭘 먹어볼까요?"></input>
-            <button
-              onClick={() => {
-                refetch({ queryKey: ['kakao/places', { kakao, searchAddress }] });
-              }}
-            >
-              <img src={finder} alt="search" />
-            </button>
-          </div>
-        </SearchBar> */}
-        <CardContainer>
-          <CardList markers={markers} />
-        </CardContainer>
+        <CommentsProvider>
+          <CardContainer>
+            <CardList markers={markers} />
+          </CardContainer>
+        </CommentsProvider>
       </StMain>
     </StHomeContainer>
   );

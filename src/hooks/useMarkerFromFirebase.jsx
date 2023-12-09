@@ -1,14 +1,14 @@
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
-import { getPlaces } from '../api/places';
+import { getPlaces, getPlacesWithSearchText } from '../api/places';
 
-export default function useMarkerFromFirebase() {
-  const { data, isLoading, error, isError } = useQuery({
-    queryKey: ['firebase/places'],
-    queryFn: getPlaces,
+export default function useMarkerFromFirebase(searchAddress) {
+  const { data, isLoading, error, isError, refetch } = useQuery({
+    queryKey: ['firebase/places', searchAddress],
+    queryFn: () => (searchAddress ? getPlacesWithSearchText(searchAddress) : getPlaces()),
     staleTime: Infinity
   });
 
-  return { markersFromFirebase: data, isLoadingFromFirebase: isLoading, isError, error };
+  return { markersFromFirebase: data, isLoadingFromFirebase: isLoading, isError, error, refetch };
 }
 
 export const MarkerFromFirebaseProvider = ({ children }) => {

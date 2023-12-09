@@ -5,7 +5,7 @@ export default function useMarker({ kakao, searchAddress }) {
   const { markersFromFirebase, isLoadingFromFirebase } = useMarkerFromFirebase();
   const { refetch, markersFromKaKao, isLoadingFromKakao } = useMarkerFromKaKao({ kakao, searchAddress });
 
-  const markers = markersFromKaKao ? markersFromKaKao : markersFromFirebase ? markersFromFirebase : [];
+  const markers = markersFromFirebase ? markersFromFirebase : markersFromKaKao ? markersFromKaKao : [];
 
   return {
     refetch,

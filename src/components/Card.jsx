@@ -9,8 +9,10 @@ import { default as bg, default as food } from '../assets/food.jpg';
 import menu2 from '../assets/menu.svg';
 import delivery from '../assets/motorsycle2.svg';
 import star from '../assets/star-regular.svg';
-import useMarker from '../hooks/useMarker';
+import useComments from '../hooks/useComments';
+import useMarkerFromFirebase from '../hooks/useMarkerFromFirebase';
 import { setSelectedMarker } from '../redux/modules/markerSlice';
+
 const Enlarge = styled(ImEnlarge2)`
   border: none;
   padding: 10px;
@@ -25,20 +27,16 @@ const Enlarge = styled(ImEnlarge2)`
   display: none;
   color: #866761;
 `;
+
 function Card({ place_name, address, number, vote, menus, id }) {
   const { kakao } = window;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { searchAddress } = useSelector((state) => state.search);
   const { selectedMarker } = useSelector((state) => state.marker);
-  const { markers } = useMarker({ kakao, searchAddress });
+  const { markersFromFirebase: markers } = useMarkerFromFirebase(searchAddress);
   const shortAddress = address.split(' ').slice(0, 2).join(' ');
-  // const
-  // const shortAddress = address.split(' ').toString();
-  // const menuNames = menus.map((menu) => menu.name);
-  // console.log(menuNames);
-
-  // console.log(shortAddress, '길이', shortAddress.length);
+  const { data } = useComments(id);
 
   const onGotoDetailBtnClickHandler = () => {
     dispatch(setSelectedMarker({ markers, id }));
@@ -46,9 +44,6 @@ function Card({ place_name, address, number, vote, menus, id }) {
     console.log(selectedMarker);
   };
 
-  //console.log(vote);
-  //console.log(menus);
-  //console.log('-----------------------');
   return (
     <StCardWrapper>
       <BgFrame>
@@ -56,7 +51,6 @@ function Card({ place_name, address, number, vote, menus, id }) {
       </BgFrame>
       <div>
         <h3>[ {place_name} ]</h3>
-        {/* <Menu>{menuNames.join(', ')}</Menu> */}
         <Address>{shortAddress}</Address>
         <Review>
           {vote !== undefined ? (
@@ -95,7 +89,6 @@ function Card({ place_name, address, number, vote, menus, id }) {
         </DetailBox>
       </div>
       <Enlarge onClick={onGotoDetailBtnClickHandler} />
-      {/*<button onClick={onGotoDetailBtnClickHandler}>상세 보기</button>*/}
     </StCardWrapper>
   );
 }
