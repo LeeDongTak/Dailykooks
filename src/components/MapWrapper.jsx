@@ -44,7 +44,7 @@ function MapWrapper() {
     <StMapContainer>
       <SearchBar />
       <StMap // 지도를 표시할 Container
-        center={{ lat: 37.49676871972202, lng: 127.02474726969814 }}
+        center={{ lat: 36.29676871972202, lng: 127.82474726979814 }}
         isPanto={true}
         ref={mapRef}
         level={13}

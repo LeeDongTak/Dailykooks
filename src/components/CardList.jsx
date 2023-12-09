@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import useMarker from '../hooks/useMarker';
 import Card from './Card';
+import CardFilter from './CardFilter';
 
 function CardList() {
   const { kakao } = window;
@@ -12,6 +13,7 @@ function CardList() {
 
   return (
     <StCardListContainer>
+      <CardFilter />
       {markers
         .filter((item) => item.id === selectedMarker.id)
         .map((item) => (
