@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import useMarker from '../hooks/useMarker';
 import Card from './Card';
 import CardFilter from './CardFilter';
-import FilteredCardList from './FilteredCardList';
 
 function CardList() {
   const { kakao } = window;
@@ -24,25 +23,21 @@ function CardList() {
             <p>{item.place_name}</p>
           </div>
         ))}
-      {isFiltered ? (
-        <FilteredCardList markers={markers} />
-      ) : (
-        <StCardList>
-          {markers.map((item) => (
-            <Card
-              key={item.id}
-              place_name={item.place_name}
-              address={item.road_address_name}
-              number={item.phone}
-              // vote={item.vote}
-              // menus={item.menus}
-              id={item.id}
-              x={item.x}
-              y={item.y}
-            />
-          ))}
-        </StCardList>
-      )}
+      <StCardList>
+        {markers.map((item) => (
+          <Card
+            key={item.id}
+            place_name={item.place_name}
+            address={item.road_address_name}
+            number={item.phone}
+            vote={item?.vote}
+            menus={item?.menus}
+            id={item.id}
+            x={item.x}
+            y={item.y}
+          />
+        ))}
+      </StCardList>
     </StCardListContainer>
   );
 }
