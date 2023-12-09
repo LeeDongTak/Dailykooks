@@ -9,6 +9,7 @@ export const getComments = async (postId) => {
 };
 
 export const addComment = async (comment) => {
+  console.log(comment);
   await setDoc(collection(db, 'comments'), comment);
 };
 

@@ -3,6 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import App from './App';
+import { CommentsProvider } from './hooks/useComments';
 import { MarkerFromFirebaseProvider } from './hooks/useMarkerFromFirebase';
 import { MarkerFromKakaoProvider } from './hooks/useMarkerFromKakao';
 import './index.css';
@@ -13,10 +14,12 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <MarkerFromFirebaseProvider>
     <MarkerFromKakaoProvider>
-      <Provider store={store}>
-        <ReactQueryDevtools initialIsOpen={false} />
-        <App />
-      </Provider>
+      <CommentsProvider>
+        <Provider store={store}>
+          <ReactQueryDevtools initialIsOpen={false} />
+          <App />
+        </Provider>
+      </CommentsProvider>
     </MarkerFromKakaoProvider>
   </MarkerFromFirebaseProvider>
 );

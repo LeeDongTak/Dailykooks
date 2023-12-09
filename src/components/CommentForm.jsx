@@ -1,13 +1,17 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { v4 as uuid } from 'uuid';
 import { addComment } from '../api/comments';
 
 function CommentForm() {
   const queryClient = useQueryClient();
+  const { selectedMarker } = useSelector((state) => state.marker);
   const mutation = useMutation(addComment, {
     onSuccess: () => {
       queryClient.invalidateQueries('firebase/comments');
+      console.log('성공');
     },
     onError: (error) => {
       console.log(error);
@@ -33,8 +37,12 @@ function CommentForm() {
     const newComment = {
       nickname,
       password,
-      content
+      content,
+      postId: selectedMarker.id,
+      commentId: uuid()
     };
+
+    mutation.mutate(newComment);
   };
 
   return (
@@ -43,13 +51,7 @@ function CommentForm() {
         <StWriterInfo>
           <div>
             <label htmlFor="nickname">닉네임</label>
-            <input
-              value={nickname}
-              id="nickname"
-              type="text"
-              defaultValue="익명의 국밥러"
-              onChange={onNicknameChangeHandler}
-            />
+            <input value={nickname} id="nickname" type="text" onChange={onNicknameChangeHandler} />
           </div>
           <div>
             <label htmlFor="password">비밀번호</label>
