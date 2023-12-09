@@ -1,0 +1,153 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import { addComment } from '../api/comments';
+
+function CommentForm() {
+  const queryClient = useQueryClient();
+  const mutation = useMutation(addComment, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('firebase/comments');
+    },
+    onError: (error) => {
+      console.log(error);
+    }
+  });
+  const [nickname, setNickname] = useState('');
+  const [password, setPassword] = useState('');
+  const [content, setContent] = useState('');
+
+  const onNicknameChangeHandler = (e) => {
+    setNickname(e.target.value);
+  };
+  const onPasswordChangeHandler = (e) => {
+    setPassword(e.target.value);
+  };
+  const onContentChangeHandler = (e) => {
+    setContent(e.target.value);
+  };
+
+  const onSubmitBtnClickHandler = (e) => {
+    e.preventDefault();
+
+    const newComment = {
+      nickname,
+      password,
+      content
+    };
+  };
+
+  return (
+    <StFormWrapper onSubmit={onSubmitBtnClickHandler}>
+      <StForm action="">
+        <StWriterInfo>
+          <div>
+            <label htmlFor="nickname">닉네임</label>
+            <input
+              value={nickname}
+              id="nickname"
+              type="text"
+              defaultValue="익명의 국밥러"
+              onChange={onNicknameChangeHandler}
+            />
+          </div>
+          <div>
+            <label htmlFor="password">비밀번호</label>
+            <input
+              value={password}
+              id="password"
+              type="password"
+              placeholder="비밀번호는 4자리 이상이어야 합니다."
+              onChange={onPasswordChangeHandler}
+            />
+          </div>
+        </StWriterInfo>
+        <StTextareaWrapper>
+          <label htmlFor="contents">내용</label>
+          <textarea
+            value={content}
+            id="contents"
+            placeholder="200자 이내의 내용을 입력해주세요"
+            maxLength={200}
+            rows={2}
+            onChange={onContentChangeHandler}
+          />
+        </StTextareaWrapper>
+      </StForm>
+      <button>댓글 등록하기</button>
+    </StFormWrapper>
+  );
+}
+
+export default CommentForm;
+
+const StFormWrapper = styled.div`
+  width: 900px;
+  margin: 0 auto;
+  padding: 12px;
+  box-sizing: border-box;
+  background-color: #dbc8b6;
+  border-radius: 18px;
+
+  button {
+    display: block;
+    margin: 0 auto;
+    padding: 12px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    &:hover {
+      background-color: #ddd;
+    }
+  }
+`;
+const StForm = styled.form`
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 12px;
+`;
+
+const StWriterInfo = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: 12px;
+  div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 12px;
+    width: 100%;
+    padding: 12px;
+    background-color: #eee5dd;
+  }
+  label {
+    font-size: 0.8rem;
+  }
+  input {
+    width: 300px;
+    padding: 6px;
+  }
+`;
+
+const StTextareaWrapper = styled.div`
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #eee5dd;
+  padding: 12px;
+  border-radius: 12px;
+  label {
+    font-size: 0.8rem;
+    display: block;
+    padding-bottom: 12px;
+  }
+  textarea {
+    box-sizing: border-box;
+    width: 100%;
+    resize: none;
+    padding: 6px;
+  }
+`;
