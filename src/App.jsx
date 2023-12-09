@@ -3,7 +3,7 @@ import GlobalStyle from './styled/GlobalStyle';
 function App() {
   // fakeData 추가 부분
   // const addDocPromises = dbData.map(async (docData) => {
-  //   const docRef = await addDoc(collection(db, 'places'), docData);
+  //   const docRef = await addDoc(collection(db, 'places'), {id: uuid(), ...docData});
   //   console.log('문서 추가 성공, ', docRef.id);
   // });
 
@@ -14,7 +14,6 @@ function App() {
   //   .catch((error) => {
   //     console.log('일괄 처리 오류: ', error);
   //   });
-
   return (
     <>
       <GlobalStyle />

@@ -3,12 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import finder from '../assets/finder.svg';
 import useMarker from '../hooks/useMarker';
+import { setIsFiltered } from '../redux/modules/filterSlice';
 import { setSearchAddress } from '../redux/modules/searchSlice';
 
 function SearchBar() {
   const { kakao } = window;
   const dispatch = useDispatch();
   const { searchAddress } = useSelector((state) => state.search);
+  const { isFiltered } = useSelector((state) => state.filter);
   const { refetch } = useMarker({ kakao, searchAddress });
   const onSearchAddressChangeHandler = (e) => {
     let searchValue = e.target.value;
@@ -18,16 +20,16 @@ function SearchBar() {
       dispatch(setSearchAddress(searchValue + ' 국밥'));
     }
   };
+  const onSearchBtnClickHandler = () => {
+    dispatch(setIsFiltered(false));
+    refetch({ queryKey: ['kakao/places', { kakao, searchAddress }] });
+  };
 
   return (
     <StSearchBarContainer>
       <div>
         <input onChange={onSearchAddressChangeHandler} placeholder="오늘은 뭘 먹어볼까요?"></input>
-        <button
-          onClick={() => {
-            refetch({ queryKey: ['kakao/places', { kakao, searchAddress }] });
-          }}
-        >
+        <button onClick={onSearchBtnClickHandler}>
           <img src={finder} alt="search" />
         </button>
       </div>

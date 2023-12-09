@@ -4,13 +4,15 @@ import styled from 'styled-components';
 import useMarker from '../hooks/useMarker';
 import Card from './Card';
 import CardFilter from './CardFilter';
+import FilteredCardList from './FilteredCardList';
 
 function CardList() {
   const { kakao } = window;
   const { searchAddress } = useSelector((state) => state.search);
+  const { isFiltered } = useSelector((state) => state.filter);
   const { markers } = useMarker({ kakao, searchAddress });
   const { selectedMarker } = useSelector((state) => state.marker);
-
+  console.log(isFiltered);
   return (
     <StCardListContainer>
       <CardFilter />
@@ -22,21 +24,25 @@ function CardList() {
             <p>{item.place_name}</p>
           </div>
         ))}
-      <StCardList>
-        {markers.map((item) => (
-          <Card
-            key={item.id}
-            place_name={item.place_name}
-            address={item.road_address_name}
-            number={item.phone}
-            // vote={item.vote}
-            // menus={item.menus}
-            id={item.id}
-            x={item.x}
-            y={item.y}
-          />
-        ))}
-      </StCardList>
+      {isFiltered ? (
+        <FilteredCardList markers={markers} />
+      ) : (
+        <StCardList>
+          {markers.map((item) => (
+            <Card
+              key={item.id}
+              place_name={item.place_name}
+              address={item.road_address_name}
+              number={item.phone}
+              // vote={item.vote}
+              // menus={item.menus}
+              id={item.id}
+              x={item.x}
+              y={item.y}
+            />
+          ))}
+        </StCardList>
+      )}
     </StCardListContainer>
   );
 }
@@ -45,7 +51,7 @@ export default CardList;
 
 const StCardListContainer = styled.section``;
 
-const StCardList = styled.ul`
+export const StCardList = styled.ul`
   display: flex;
   justify-content: flex-start;
   //
