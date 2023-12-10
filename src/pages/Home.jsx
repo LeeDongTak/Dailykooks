@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import CardList from '../components/CardList';
 import MapWrapper from '../components/MapWrapper';
-import { CommentsProvider } from '../hooks/useComments';
 import useMarkerFromFirebase from '../hooks/useMarkerFromFirebase';
 
 function Home() {
@@ -25,11 +24,9 @@ function Home() {
     <StHomeContainer>
       <MapWrapper markers={markers} />
       <StMain>
-        <CommentsProvider>
-          <CardContainer>
-            <CardList markers={markers} />
-          </CardContainer>
-        </CommentsProvider>
+        <CardContainer>
+          <CardList markers={markers} />
+        </CardContainer>
       </StMain>
     </StHomeContainer>
   );

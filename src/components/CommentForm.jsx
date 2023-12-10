@@ -1,13 +1,14 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import dayjs from 'dayjs';
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { v4 as uuid } from 'uuid';
 import { addComment } from '../api/comments';
 
 function CommentForm() {
   const queryClient = useQueryClient();
-  const { selectedMarker } = useSelector((state) => state.marker);
+  // const { selectedMarker } = useSelector((state) => state.marker);
+  const currentMarker = JSON.parse(localStorage.getItem('selectedMarker'));
   const mutation = useMutation(addComment, {
     onSuccess: () => {
       queryClient.invalidateQueries('firebase/comments');
@@ -17,7 +18,7 @@ function CommentForm() {
       console.log(error);
     }
   });
-  const [nickname, setNickname] = useState('');
+  const [nickname, setNickname] = useState('익명의 국밥러');
   const [password, setPassword] = useState('');
   const [content, setContent] = useState('');
 
@@ -38,15 +39,20 @@ function CommentForm() {
       nickname,
       password,
       content,
-      postId: selectedMarker.id,
+      createdAt: dayjs().format('YYYY년 MM월 DD일 hh:mm'),
+      postId: currentMarker.id,
       commentId: uuid()
     };
-
+    console.log(newComment);
     mutation.mutate(newComment);
+
+    setNickname('');
+    setPassword('');
+    setContent('');
   };
 
   return (
-    <StFormWrapper onSubmit={onSubmitBtnClickHandler}>
+    <StFormWrapper>
       <StForm action="">
         <StWriterInfo>
           <div>
@@ -76,7 +82,7 @@ function CommentForm() {
           />
         </StTextareaWrapper>
       </StForm>
-      <button>댓글 등록하기</button>
+      <button onClick={onSubmitBtnClickHandler}>댓글 등록하기</button>
     </StFormWrapper>
   );
 }

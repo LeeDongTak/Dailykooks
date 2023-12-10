@@ -9,7 +9,6 @@ import { default as bg, default as food } from '../assets/food.jpg';
 import menu2 from '../assets/menu.svg';
 import delivery from '../assets/motorsycle2.svg';
 import star from '../assets/star-regular.svg';
-import useComments from '../hooks/useComments';
 import useMarkerFromFirebase from '../hooks/useMarkerFromFirebase';
 import { setSelectedMarker } from '../redux/modules/markerSlice';
 
@@ -36,7 +35,7 @@ function Card({ place_name, address, number, vote, menus, id }) {
   const { selectedMarker } = useSelector((state) => state.marker);
   const { markersFromFirebase: markers } = useMarkerFromFirebase(searchAddress);
   const shortAddress = address.split(' ').slice(0, 2).join(' ');
-  const { data } = useComments(id);
+  // const { data } = useComments(id);
 
   const onGotoDetailBtnClickHandler = () => {
     dispatch(setSelectedMarker({ markers, id }));

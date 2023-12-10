@@ -4,7 +4,7 @@ import { getComments } from '../api/comments';
 export default function useComments(postId) {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ['firebase/comments'],
-    queryFn: getComments,
+    queryFn: () => getComments(postId),
     staleTime: Infinity
   });
 

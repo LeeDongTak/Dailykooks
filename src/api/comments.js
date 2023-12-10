@@ -1,16 +1,16 @@
-import { collection, deleteDoc, doc, getDocs, query, setDoc, where } from '@firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, getDocs, query, setDoc, where } from '@firebase/firestore';
 import { db } from '../firebase';
 
 export const getComments = async (postId) => {
   const q = query(collection(db, 'comments'), where('postId', '==', postId));
   const querySnapShot = await getDocs(q);
-  const data = querySnapShot.docs;
+  const data = querySnapShot.docs.map((doc) => doc.data());
   return data;
 };
 
 export const addComment = async (comment) => {
   console.log(comment);
-  await setDoc(collection(db, 'comments'), comment);
+  await addDoc(collection(db, 'comments'), comment);
 };
 
 export const updateComment = async (commentId, updatedContent) => {
