@@ -47,12 +47,12 @@ function useFilterMarkers(markers, filter) {
   });
 
   switch (filter) {
-    case 'vote':
+    case '평점':
       filteredMarkers = markersFilteredByVote;
       break;
-    case 'price range':
+    case '가격대':
       break;
-    case 'loation':
+    case '지역':
       break;
 
     default:

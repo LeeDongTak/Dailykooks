@@ -1,12 +1,9 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import useComments from '../hooks/useComments';
 import Comment from './Comment';
 
-function CommentsList() {
-  const { selectedMarker } = useSelector((state) => state.marker);
-  const currentMarker = JSON.parse(localStorage.getItem('selectedMarker'));
+function CommentsList({ currentMarker }) {
   const { data: comments } = useComments(currentMarker.id);
   console.log(comments);
 

@@ -5,10 +5,9 @@ import styled from 'styled-components';
 import { v4 as uuid } from 'uuid';
 import { addComment } from '../api/comments';
 
-function CommentForm() {
+function CommentForm({ currentMarker }) {
   const queryClient = useQueryClient();
   // const { selectedMarker } = useSelector((state) => state.marker);
-  const currentMarker = JSON.parse(localStorage.getItem('selectedMarker'));
   const mutation = useMutation(addComment, {
     onSuccess: () => {
       queryClient.invalidateQueries('firebase/comments');

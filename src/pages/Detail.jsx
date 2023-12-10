@@ -104,8 +104,8 @@ function Detail() {
           />
         </InfoBoxFrame>
       </DetailBox>
-      <CommentForm />
-      <CommentsList markerId={currentMarker.id} />
+      <CommentForm currentMarker={currentMarker} />
+      <CommentsList currentMarker={currentMarker} />
     </DetailPage>
   );
 }

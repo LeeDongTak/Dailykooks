@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import useMarker from '../hooks/useMarker';
 import { setFilter, setIsFiltered } from '../redux/modules/filterSlice';
 
-const filterCriteria = ['location', 'price range', 'vote'];
+const filterCriteria = ['지역', '가격대', '평점'];
 
 function CardFilter() {
   const { kakao } = window;
