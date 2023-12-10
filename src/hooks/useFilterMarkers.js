@@ -1,7 +1,7 @@
 import { markersFilteredByLocation, markersFilteredByPriceRange, markersFilteredByVote } from '../data/filterArrays';
 
 function useFilterMarkers(markers, filter) {
-  let filteredMarkers;
+  let filteredMarkers = [];
 
   switch (filter) {
     case '평점':
@@ -26,7 +26,7 @@ export default useFilterMarkers;
 const filterByVote = (filterArray, markers) => {
   markers.forEach((marker) => {
     for (let i = 0; i < filterArray.length; i++) {
-      if (marker.vote <= filterArray[i].vote && marker.vote >= filterArray[i + 1].vote)
+      if (marker.vote <= filterArray[i].vote && marker.vote > filterArray[i + 1].vote)
         filterArray[i].places.push({ ...marker });
     }
   });
@@ -36,7 +36,7 @@ const filterByVote = (filterArray, markers) => {
 const filterByPriceRange = (filterArray, markers) => {
   markers.forEach((marker) => {
     for (let i = 0; i < filterArray.length; i++) {
-      if (`필터 로직을 여기에 넣어주세요`) filterArray[i].places.push({ ...marker });
+      if (`marker.menus[0].price`) filterArray[i].places.push({ ...marker });
     }
   });
   return filterArray;
