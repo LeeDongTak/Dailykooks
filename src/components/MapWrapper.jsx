@@ -22,7 +22,7 @@ function MapWrapper() {
       bounds.extend(new kakao.maps.LatLng(marker.y, marker.x));
     });
   }, [markers]);
-
+console.log(markers)
   // useEffect(() => {
   //   const map = mapRef.current;
   //   if (map) map.setBounds(bounds);
