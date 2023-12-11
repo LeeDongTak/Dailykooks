@@ -7,7 +7,6 @@ export default function useMarkerFromFirebase(searchAddress) {
     queryFn: () => (searchAddress ? getPlacesWithSearchText(searchAddress) : getPlaces()),
     staleTime: Infinity
   });
-
   return { markersFromFirebase: data, isLoadingFromFirebase: isLoading, isError, error, refetch };
 }
 

@@ -3,6 +3,7 @@ import { Map, MapMarker, MarkerClusterer } from 'react-kakao-maps-sdk';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import useMarkerFromFirebase from '../hooks/useMarkerFromFirebase';
+import useMarkerFromKaKao from '../hooks/useMarkerFromKakao';
 import { setHoveredMarker, setSelectedMarker } from '../redux/modules/markerSlice';
 import SearchBar from './SearchBar';
 
@@ -12,7 +13,8 @@ function MapWrapper() {
   const dispatch = useDispatch();
   const { searchAddress } = useSelector((state) => state.search);
   // const { markers } = useMarker({ kakao, searchAddress });
-  const { markersFromFirebase: markers } = useMarkerFromFirebase(searchAddress);
+  // const { markersFromFirebase: markers } = useMarkerFromFirebase(searchAddress);
+  const { markersFromKaKao: markers } = useMarkerFromKaKao({ kakao, searchAddress });
   const { hoveredMarkerId } = useSelector((state) => state.marker);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -43,7 +45,6 @@ console.log(markers)
 
   return (
     <StMapContainer>
-      <SearchBar />
       <StMap // 지도를 표시할 Container
         center={{ lat: 36.29676871972202, lng: 127.82474726979814 }}
         isPanto={true}
@@ -51,6 +52,7 @@ console.log(markers)
         level={13}
         // style={{ width: '600', height: '600' }}
       >
+        <SearchBar />
         <MarkerClusterer averageCenter={true} minLevel={10}>
           {markers?.map((item) => (
             <StMapMarker // 인포윈도우를 생성하고 지도에 표시합니다

@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import finder from '../assets/finder.svg';
+// import useMarkerFromFirebase from '../hooks/useMarkerFromFirebase';
 import useMarkerFromFirebase from '../hooks/useMarkerFromFirebase';
 import useMarker from '../hooks/useMarker';
+import { setCrawlingData, __crawlingData } from '../redux/modules/markerSlice';
 import useMarkerFromKaKao from '../hooks/useMarkerFromKakao';
 import { setIsFiltered } from '../redux/modules/filterSlice';
 import { setSearchAddress } from '../redux/modules/searchSlice';
@@ -12,6 +14,7 @@ import axios from 'axios';
 function SearchBar() {
   const { kakao } = window;
   const dispatch = useDispatch();
+  const marker = useSelector((state)=>state.marker)
   const { searchAddress } = useSelector((state) => state.search);
   const { isFiltered } = useSelector((state) => state.filter);
   const { refetch, markersFromKaKao } = useMarkerFromKaKao({ kakao, searchAddress }); // 키워드로 검색
@@ -22,29 +25,22 @@ function SearchBar() {
     setSearchInput(e.target.value);
   };
 
-
-const aaa = async (data) => {
-  try {
-    const res = await axios.get(`http://43.202.134.179:3000/mapDetail/${data.id}`);
-    console.log(res)
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-
-  const crawlingData = async (data) => {
-    try {
-      // const resultData = [];
-      for (let i = 0; i < data.length; i++) {
-        setTimeout(()=>{
-          aaa(data[i])
-        },500)
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const crawlingData = async (data) => {
+  //   try {
+  //     const resultData = [];
+  //     for (let i = 0; i < data.length; i++) {
+  //       const res = await axios.get(`http://43.202.134.179:3000/mapDetail/${data[i].id}`);
+  //       resultData.push({ id: data[i].id, ...res.data.result})
+  //       console.log(marker.crawlingData);
+  //       console.log(res.data.result);
+  //     }
+  //     dispatch(setCrawlingData(resultData))
+  //     console.log(marker.crawlingData) 
+  //     console.log(resultData) 
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const onSearchBtnClickHandler = async (e) => {
     e.preventDefault();
@@ -52,9 +48,10 @@ const aaa = async (data) => {
     dispatch(setSearchAddress(searchInput));
     // refetch({ queryKey: ['firebase/places', searchAddress] }); // firebase에서 가져온 데이터로 검색
     refetch({ queryKey: ['kakao/places', { kakao, searchAddress }] }); // 키워드로 검색
-    crawlingData(markersFromKaKao);
+    // crawlingData(markersFromKaKao);
+    dispatch(__crawlingData(markersFromKaKao))
+    // console.log(marker.crawlingData)
   };
-
   return (
     <StSearchBarContainer>
       <form onSubmit={onSearchBtnClickHandler}>
@@ -62,7 +59,6 @@ const aaa = async (data) => {
         <input
           type="text"
           id="searchText"
-          value={searchInput}
           onChange={onSearchAddressChangeHandler}
           placeholder="오늘은 뭘 먹어볼까요?"
         ></input>

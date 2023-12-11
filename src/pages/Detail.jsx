@@ -42,7 +42,7 @@ function Detail() {
             <hr />
             <p>
               <img src={clock} alt="" />
-              매일 00:00 ~ 24:00
+              {currentMarker.businessHours}
             </p>
             <hr />
             <p>

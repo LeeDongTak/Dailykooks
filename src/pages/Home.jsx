@@ -4,21 +4,26 @@ import styled from 'styled-components';
 import CardList from '../components/CardList';
 import MapWrapper from '../components/MapWrapper';
 import useMarkerFromFirebase from '../hooks/useMarkerFromFirebase';
+import useMarkerFromKaKao from '../hooks/useMarkerFromKakao';
+import useMarker from '../hooks/useMarker';
 
 function Home() {
-  // const { kakao } = window;
+  const { kakao } = window;
   const { searchAddress } = useSelector((state) => state.search);
-  // const { refetch, markers, isLoadingFromFirebase, isLoadingFromKakao } = useMarker({ kakao, searchAddress });
-  const { markersFromFirebase: markers, isLoadingFromFirebase } = useMarkerFromFirebase(searchAddress);
+  const { refetch, markers, isLoadingFromFirebase, isLoadingFromKakao } = useMarker({ kakao, searchAddress });
+  // const { markersFromFirebase: markers, isLoadingFromFirebase } = useMarkerFromFirebase(searchAddress);
+  // const { markersFromKaKao: markers } = useMarkerFromKaKao({ kakao, searchAddress });
 
-  if (isLoadingFromFirebase) {
-    return <h1> 로딩 중... </h1>;
-  }
+  // if (isLoadingFromFirebase) {
+  //   return <h1> 로딩 중... </h1>;
+  // }
   console.log(markers);
 
   // console.log('data from firebase : ');
   // console.log('---------------');
   // console.log('data from kakaomap search : ');
+
+  console.log(markers);
 
   return (
     <StHomeContainer>

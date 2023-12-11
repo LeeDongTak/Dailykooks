@@ -11,6 +11,7 @@ import delivery from '../assets/motorsycle2.svg';
 import star from '../assets/star-regular.svg';
 import useMarkerFromFirebase from '../hooks/useMarkerFromFirebase';
 import { setSelectedMarker } from '../redux/modules/markerSlice';
+import useMarker from '../hooks/useMarker';
 
 const Enlarge = styled(ImEnlarge2)`
   border: none;
@@ -27,27 +28,28 @@ const Enlarge = styled(ImEnlarge2)`
   color: #866761;
 `;
 
-function Card({ place_name, address, number, vote, menus, id }) {
+function Card({ resultMarkers,place_name, address, number, vote, menus, id,bannerImg,businessHours }) {
   const { kakao } = window;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { searchAddress } = useSelector((state) => state.search);
   const { selectedMarker } = useSelector((state) => state.marker);
-  const { markersFromFirebase: markers } = useMarkerFromFirebase(searchAddress);
+  // const { markersFromFirebase: markers } = useMarkerFromFirebase(searchAddress);
+  const { markers } = useMarker({ kakao, searchAddress });
   const shortAddress = address.split(' ').slice(0, 2).join(' ');
   // const { data } = useComments(id);
 
   const onGotoDetailBtnClickHandler = () => {
-    dispatch(setSelectedMarker({ markers, id }));
+    dispatch(setSelectedMarker({ resultMarkers, id }));
     navigate(`/places/${id}`);
     console.log(selectedMarker);
   };
 
   return (
-    <StCardWrapper>
-      <BgFrame>
+    <StCardWrapper bannerImg={bannerImg}>
+      {/* <BgFrame>
         <Bg src={bg} />
-      </BgFrame>
+      </BgFrame> */}
       <div>
         <h3>[ {place_name} ]</h3>
         <Address>{shortAddress}</Address>
@@ -70,11 +72,11 @@ function Card({ place_name, address, number, vote, menus, id }) {
             매일 00:00 ~ 24:00
           </p>
 
-          <p>
+          {/* <p>
             <img src={bag} />
             포장 가능, <img src={delivery} alt="" />
             배달 불가
-          </p>
+          </p> */}
           {menus &&
             Object.values(menus).map((menu, idx) => (
               <div key={idx}>
@@ -153,9 +155,9 @@ const StCardWrapper = styled.li`
     bottom: 0;
     background-color: transparent;
   }
-  /* &::before {
+  &::before {
     content: '';
-    background: url(${food});
+    background: ${({bannerImg})=>bannerImg === undefined?`url(${food})`:bannerImg};
     background-size: cover;
     background-repeat: no-repeat;
     position: absolute;
@@ -168,7 +170,7 @@ const StCardWrapper = styled.li`
     width: 100%;
     height: 100%;
     z-index: -1;
-  } */
+  }
 
   &:hover ${DetailBox} {
     transform: translate(0, 0px);
