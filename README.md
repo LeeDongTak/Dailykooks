@@ -6,90 +6,126 @@
 
 ### Features
 
-- State management using Redux
+- Client State management using RTK
+- Server State management using Tanstack React-Query
 - Asynchronous networking with server using redux thunk
-- Write letters to the members of a band
-- Perform CRD operations on each letter, currently working on Updating letters
-- List of letters are fetched via json-server
+- Fetch restaurants' information from firebase/firestore
+- Draw a map with markers of fetched restaurants on it
+- Create a card list of restaurants with fetched information
+- Filter Restaurants in current card list under two conditions
+  - location
+  - Reputation
+- Perform searching operations based on
+  - location
+  - menu name(soup's name in particular)
+  - restaurant's name
+- Perform CRUD operations on comments of a certain restaurant's detail page
 
 ### Dependencies
 
 - React
-  - react
-  - react-dom
+  - `react`
+  - `react-dom`
 - Routing
-  - react-router-dom
+  - `react-router-dom`
 - State Management
-  - @tanstack/react-query
-  - @tanstack/react-query-devtools
-  - redux
-  - react-redux
-  - @reduxjs/toolkit
+  - `@tanstack/react-query`
+  - `@tanstack/react-query-devtools`
+  - `redux`
+  - `react-redux`
+  - `@reduxjs/toolkit`
 - Firebase
-  - firebase
-  - @firebase/firestore
+  - `firebase`
+  - `@firebase/firestore`
 - Kakao Map API
-  - react-kakao-maps-sdk
+  - `react-kakao-maps-sdk`
 - Data Scraping
-  - puppeteer  
-  - express
-- Miscellenous
-  - styled-components
-  - dayjs
-  - react-icons
-  - uuid
+  - `puppeteer`
+  - `express`
+- Miscellaneous
+  - `styled-components`
+  - `dayjs`
+  - `react-icons`
+  - `uuid`
 
 ### File tree
 
 ```
 📦src
+ ┣ 📂api
+ ┃ ┣ 📜comments.js
+ ┃ ┗ 📜places.js
  ┣ 📂assets
- ┃ ┣ 📜avatar.jpg
- ┃ ┣ 📜bannerBg.png
- ┃ ┣ 📜bannerLogo.png
- ┃ ┣ 📜bgbottom.png
- ┃ ┗ 📜bgwall.png
+ ┃ ┣ 📜bag.svg
+ ┃ ┣ 📜bag2.svg
+ ┃ ┣ 📜bg.png
+ ┃ ┣ 📜bg2.png
+ ┃ ┣ 📜bowl.svg
+ ┃ ┣ 📜clock.svg
+ ┃ ┣ 📜finder.svg
+ ┃ ┣ 📜food.jpg
+ ┃ ┣ 📜location.svg
+ ┃ ┣ 📜location_icon.svg
+ ┃ ┣ 📜logo.svg
+ ┃ ┣ 📜menu.svg
+ ┃ ┣ 📜menu2.svg
+ ┃ ┣ 📜motersycle2.svg
+ ┃ ┣ 📜motorcycle.svg
+ ┃ ┣ 📜motorsycle2.svg
+ ┃ ┣ 📜phone.svg
+ ┃ ┣ 📜spoon.svg
+ ┃ ┣ 📜star-regular.svg
+ ┃ ┗ 📜star2.svg
  ┣ 📂components
- ┃ ┣ 📂common
- ┃ ┃ ┗ 📜InputDiv.jsx
- ┃ ┣ 📂layout
- ┃ ┃ ┗ 📜Layout.jsx
- ┃ ┣ 📜Footer.jsx
+ ┃ ┣ 📜Card.jsx
+ ┃ ┣ 📜CardFilter.jsx
+ ┃ ┣ 📜CardList.jsx
+ ┃ ┣ 📜Comment.jsx
+ ┃ ┣ 📜CommentForm.jsx
+ ┃ ┣ 📜CommentsList.jsx
+ ┃ ┣ 📜FilteredCardList.jsx
  ┃ ┣ 📜Header.jsx
- ┃ ┣ 📜Letter.jsx
- ┃ ┣ 📜LetterForm.jsx
- ┃ ┣ 📜LetterList.jsx
- ┃ ┣ 📜SignIn.jsx
- ┃ ┗ 📜SignUp.jsx
+ ┃ ┣ 📜MapWrapper.jsx
+ ┃ ┗ 📜SearchBar.jsx
+ ┣ 📂data
+ ┃ ┗ 📜filterArrays.js
+ ┣ 📂hooks
+ ┃ ┣ 📜useComments.js
+ ┃ ┣ 📜useFilterMarkers.js
+ ┃ ┣ 📜useMarker.js
+ ┃ ┣ 📜useMarkerFromFirebase.jsx
+ ┃ ┗ 📜useMarkerFromKakao.jsx
+ ┣ 📂layout
+ ┃ ┗ 📜Layout.jsx
  ┣ 📂pages
  ┃ ┣ 📜Detail.jsx
  ┃ ┣ 📜Home.jsx
- ┃ ┣ 📜Login.jsx
- ┃ ┣ 📜NotFound.jsx
- ┃ ┗ 📜Profile.jsx
+ ┃ ┗ 📜Router.jsx
  ┣ 📂redux
  ┃ ┣ 📂config
  ┃ ┃ ┗ 📜configStore.js
  ┃ ┗ 📂modules
- ┃ ┃ ┣ 📜authSlice.js
- ┃ ┃ ┣ 📜lettersSlice.js
- ┃ ┃ ┗ 📜membersSlice.js
- ┣ 📂shared
- ┃ ┣ 📜Router.jsx
- ┃ ┗ 📜data.js
- ┣ 📜App.css
- ┣ 📜App.js
+ ┃ ┃ ┣ 📜filterSlice.js
+ ┃ ┃ ┣ 📜markerSlice.js
+ ┃ ┃ ┣ 📜searchSlice.js
+ ┃ ┃ ┗ 📜templateSlice.js
+ ┣ 📂styled
+ ┃ ┗ 📜GlobalStyle.js
+ ┣ 📜App.jsx
  ┣ 📜App.test.js
- ┣ 📜GlobalStyle.jsx
+ ┣ 📜db.json
+ ┣ 📜firebase.js
  ┣ 📜index.css
  ┣ 📜index.js
  ┣ 📜logo.svg
  ┣ 📜reportWebVitals.js
+ ┣ 📜setupProxy.js
  ┗ 📜setupTests.js
 ```
 
 ### Usage
 
 1. `git clone` : clone repository
-2. `npm install`, `yarn install` : install dependencies modules from `package.json`
-3. `yarn start` : open page in development server(localHost)
+3. `npm install`, `yarn install` : install dependencies modules from `package.json`
+2. create `.env.local` and populate it: bundle API keys and other information
+4. `npm run start`, `yarn start` : open page in development server(localHost)
