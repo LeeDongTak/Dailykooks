@@ -1,4 +1,4 @@
-import { markersFilteredByLocation, markersFilteredByPriceRange, markersFilteredByVote } from '../data/filterArrays';
+import { markersFilteredByLocation, markersFilteredByVote } from '../data/filterArrays';
 
 function useFilterMarkers(markers, filter) {
   let filteredMarkers = [];
@@ -6,9 +6,6 @@ function useFilterMarkers(markers, filter) {
   switch (filter) {
     case '평점':
       filteredMarkers = filterByVote(markersFilteredByVote, markers);
-      break;
-    case '가격대':
-      filteredMarkers = filterByPriceRange(markersFilteredByPriceRange, markers);
       break;
     case '지역':
       filteredMarkers = filterByLocation(markersFilteredByLocation, markers);
@@ -33,19 +30,10 @@ const filterByVote = (filterArray, markers) => {
   return filterArray;
 };
 
-const filterByPriceRange = (filterArray, markers) => {
-  markers.forEach((marker) => {
-    for (let i = 0; i < filterArray.length; i++) {
-      if (`marker.menus[0].price`) filterArray[i].places.push({ ...marker });
-    }
-  });
-  return filterArray;
-};
-
 const filterByLocation = (filterArray, markers) => {
   markers.forEach((marker) => {
     for (let i = 0; i < filterArray.length; i++) {
-      if (`필터 로직을 여기에 넣어주세요`) filterArray[i].places.push({ ...marker });
+      if (marker.road_address_name.slice(0, 2) === filterArray[i].location) filterArray[i].places.push({ ...marker });
     }
   });
   return filterArray;

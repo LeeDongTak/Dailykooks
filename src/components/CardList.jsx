@@ -17,14 +17,6 @@ function CardList() {
   return (
     <StCardListContainer>
       <CardFilter />
-      {markers
-        ?.filter((item) => item.id === selectedMarker.id)
-        ?.map((item) => (
-          <div key={item.id}>
-            <p>{item.id}</p>
-            <p>{item.place_name}</p>
-          </div>
-        ))}
       {isFiltered ? (
         <FilteredCardList markers={markers} />
       ) : (

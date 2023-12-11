@@ -94,7 +94,7 @@ function Detail() {
             style={{
               // 지도의 크기
               width: '500px',
-              height: '500px'
+              height: '596px'
             }}
             marker={{
               lat: yLoc,

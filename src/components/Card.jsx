@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import bag from '../assets/bag2.svg';
 import clock from '../assets/clock.svg';
-import { default as bg, default as food } from '../assets/food.jpg';
+import { default as bg } from '../assets/food.jpg';
 import menu2 from '../assets/menu.svg';
 import delivery from '../assets/motorsycle2.svg';
 import star from '../assets/star-regular.svg';
@@ -35,12 +35,10 @@ function Card({ place_name, address, number, vote, menus, id }) {
   const { selectedMarker } = useSelector((state) => state.marker);
   const { markersFromFirebase: markers } = useMarkerFromFirebase(searchAddress);
   const shortAddress = address.split(' ').slice(0, 2).join(' ');
-  // const { data } = useComments(id);
 
   const onGotoDetailBtnClickHandler = () => {
     dispatch(setSelectedMarker({ markers, id }));
     navigate(`/places/${id}`);
-    console.log(selectedMarker);
   };
 
   return (
@@ -153,22 +151,6 @@ const StCardWrapper = styled.li`
     bottom: 0;
     background-color: transparent;
   }
-  /* &::before {
-    content: '';
-    background: url(${food});
-    background-size: cover;
-    background-repeat: no-repeat;
-    position: absolute;
-    width: 100%;
-    opacity: 0.3;
-    top: 0px;
-    left: 0px;
-    border-radius: 20px;
-    right: 0px;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-  } */
 
   &:hover ${DetailBox} {
     transform: translate(0, 0px);
