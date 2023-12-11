@@ -4,15 +4,22 @@ import useComments from '../hooks/useComments';
 import Comment from './Comment';
 
 function CommentsList({ currentMarker }) {
-  const { data: comments } = useComments(currentMarker.id);
+  const { data: comments, isLoading, isError, error } = useComments(currentMarker.id);
   console.log(comments);
+
+  if (isLoading) {
+    return <h1>로딩중...</h1>;
+  }
+  if (isError) {
+    return <h1>{error}</h1>;
+  }
 
   return (
     <StCommentsListWrapper>
       <ul>
         {comments?.map((comment) => (
           <li key={comment.commentId}>
-            <Comment currentMarker={currentMarker} />
+            <Comment comment={comment} />
           </li>
         ))}
       </ul>

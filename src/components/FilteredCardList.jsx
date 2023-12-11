@@ -15,7 +15,7 @@ function FilteredCardList({ markers }) {
         <StSection key={idx}>
           <StHeader key={idx}>
             <span>별점</span>
-            {marker.vote - 0.5} 점 이상
+            {`${marker[Object.keys(marker)[0]]} ${marker.postFix}`}
           </StHeader>
           <StCardList>
             {marker?.places?.map((item) => (

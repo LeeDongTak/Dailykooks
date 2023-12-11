@@ -2,12 +2,10 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { v4 as uuid } from 'uuid';
 import { addComment } from '../api/comments';
 
 function CommentForm({ currentMarker }) {
   const queryClient = useQueryClient();
-  // const { selectedMarker } = useSelector((state) => state.marker);
   const mutation = useMutation(addComment, {
     onSuccess: () => {
       queryClient.invalidateQueries('firebase/comments');
@@ -39,13 +37,12 @@ function CommentForm({ currentMarker }) {
       password,
       content,
       createdAt: dayjs().format('YYYY년 MM월 DD일 hh:mm'),
-      postId: currentMarker.id,
-      commentId: uuid()
+      postId: currentMarker.id
     };
     console.log(newComment);
     mutation.mutate(newComment);
 
-    setNickname('');
+    setNickname('익명의 국밥러');
     setPassword('');
     setContent('');
   };
@@ -146,6 +143,9 @@ const StTextareaWrapper = styled.div`
   background-color: #eee5dd;
   padding: 12px;
   border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   label {
     font-size: 0.8rem;
     display: block;
@@ -153,7 +153,7 @@ const StTextareaWrapper = styled.div`
   }
   textarea {
     box-sizing: border-box;
-    width: 100%;
+    width: 91%;
     resize: none;
     padding: 6px;
   }

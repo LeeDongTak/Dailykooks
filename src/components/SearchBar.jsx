@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import finder from '../assets/finder.svg';
+// import useMarkerFromFirebase from '../hooks/useMarkerFromFirebase';
 import useMarkerFromFirebase from '../hooks/useMarkerFromFirebase';
 import { setIsFiltered } from '../redux/modules/filterSlice';
 import { setSearchAddress } from '../redux/modules/searchSlice';
@@ -11,22 +12,22 @@ function SearchBar() {
   const dispatch = useDispatch();
   const { searchAddress } = useSelector((state) => state.search);
   const { isFiltered } = useSelector((state) => state.filter);
-  // const { refetch } = useMarker({ kakao, searchAddress });
+  // const { refetch } = useMarkerFromKaKao({ kakao, searchAddress });
+  const [searchText, setSearchText] = useState('');
   const { refetch } = useMarkerFromFirebase(searchAddress);
 
-  const onSearchAddressChangeHandler = (e) => {};
+  const onSearchAddressChangeHandler = (e) => {
+    setSearchText(e.target.value);
+  };
 
   const onSearchBtnClickHandler = (e) => {
-    const searchValue = e.target.searchText.value;
+    e.preventDefault();
     dispatch(setIsFiltered(false));
-    if (searchValue.includes('국밥')) {
-      dispatch(setSearchAddress(searchValue));
-    } else {
-      dispatch(setSearchAddress(searchValue));
-    }
+    dispatch(setSearchAddress(searchText));
     refetch({ queryKey: ['firebase/places', searchAddress] });
     // refetch({ queryKey: ['kakao/places', { kakao, searchAddress }] });
   };
+  console.log(searchAddress);
 
   return (
     <StSearchBarContainer>
@@ -35,6 +36,7 @@ function SearchBar() {
         <input
           type="text"
           id="searchText"
+          value={searchText}
           onChange={onSearchAddressChangeHandler}
           placeholder="오늘은 뭘 먹어볼까요?"
         ></input>
