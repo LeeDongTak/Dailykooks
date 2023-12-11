@@ -27,8 +27,13 @@ const fetchMarkerByAddress = async ({ queryKey }) => {
     const placeSearchInstance = new kakao.maps.services.Places();
     const searchCallBackFunc = function (data, status) {
       if (status === kakao.maps.services.Status.OK) {
+        console.log(status)
+        console.log(kakao.maps.services.Status.OK)
         resolve(data);
       } else {
+        console.log(status)
+        console.log(kakao.maps.services.Status.OK)
+        console.log(searchAddress)
         reject(new Error('Failed to fetch data'));
       }
     };

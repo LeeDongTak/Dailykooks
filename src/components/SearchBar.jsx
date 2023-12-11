@@ -1,31 +1,58 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import finder from '../assets/finder.svg';
 import useMarkerFromFirebase from '../hooks/useMarkerFromFirebase';
+import useMarker from '../hooks/useMarker';
+import useMarkerFromKaKao from '../hooks/useMarkerFromKakao';
 import { setIsFiltered } from '../redux/modules/filterSlice';
 import { setSearchAddress } from '../redux/modules/searchSlice';
+import axios from 'axios';
 
 function SearchBar() {
   const { kakao } = window;
   const dispatch = useDispatch();
   const { searchAddress } = useSelector((state) => state.search);
   const { isFiltered } = useSelector((state) => state.filter);
-  // const { refetch } = useMarker({ kakao, searchAddress });
-  const { refetch } = useMarkerFromFirebase(searchAddress);
+  const { refetch, markersFromKaKao } = useMarkerFromKaKao({ kakao, searchAddress }); // 키워드로 검색
+  const [searchInput, setSearchInput] = useState('');
+  // const { refetch } = useMarkerFromFirebase(searchAddress); // firebase에서 가져온 데이터로 검색
 
-  const onSearchAddressChangeHandler = (e) => {};
+  const onSearchAddressChangeHandler = (e) => {
+    setSearchInput(e.target.value);
+  };
 
-  const onSearchBtnClickHandler = (e) => {
-    const searchValue = e.target.searchText.value;
-    dispatch(setIsFiltered(false));
-    if (searchValue.includes('국밥')) {
-      dispatch(setSearchAddress(searchValue));
-    } else {
-      dispatch(setSearchAddress(searchValue));
+
+const aaa = async (data) => {
+  try {
+    const res = await axios.get(`http://43.202.134.179:3000/mapDetail/${data.id}`);
+    console.log(res)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+
+  const crawlingData = async (data) => {
+    try {
+      // const resultData = [];
+      for (let i = 0; i < data.length; i++) {
+        setTimeout(()=>{
+          aaa(data[i])
+        },500)
+      }
+    } catch (error) {
+      console.log(error);
     }
-    refetch({ queryKey: ['firebase/places', searchAddress] });
-    // refetch({ queryKey: ['kakao/places', { kakao, searchAddress }] });
+  };
+
+  const onSearchBtnClickHandler = async (e) => {
+    e.preventDefault();
+    dispatch(setIsFiltered(false));
+    dispatch(setSearchAddress(searchInput));
+    // refetch({ queryKey: ['firebase/places', searchAddress] }); // firebase에서 가져온 데이터로 검색
+    refetch({ queryKey: ['kakao/places', { kakao, searchAddress }] }); // 키워드로 검색
+    crawlingData(markersFromKaKao);
   };
 
   return (
@@ -35,6 +62,7 @@ function SearchBar() {
         <input
           type="text"
           id="searchText"
+          value={searchInput}
           onChange={onSearchAddressChangeHandler}
           placeholder="오늘은 뭘 먹어볼까요?"
         ></input>
