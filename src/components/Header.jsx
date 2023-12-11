@@ -11,7 +11,9 @@ function Header() {
     <StHeader>
       <div onClick={onLogoClickHandler}>
         <img src={logo} />
-        <p>데일리국밥</p>
+        <p>
+          데일리<span>국밥</span>
+        </p>
       </div>
     </StHeader>
   );
@@ -31,6 +33,9 @@ const StHeader = styled.header`
     display: flex;
     align-items: center;
     cursor: pointer;
+  }
+  span {
+    color: #de754c;
   }
   p {
     background-color: transparent;
