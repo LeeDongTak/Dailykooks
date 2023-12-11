@@ -2,9 +2,9 @@ import React, { useMemo, useRef, useState } from 'react';
 import { Map, MapMarker, MarkerClusterer } from 'react-kakao-maps-sdk';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+import SearchBar from '../components/SearchBar';
 import useMarkerFromFirebase from '../hooks/useMarkerFromFirebase';
 import { setHoveredMarker, setSelectedMarker } from '../redux/modules/markerSlice';
-
 function MapWrapper() {
   const { kakao } = window;
   const mapRef = useRef(null);
@@ -42,6 +42,7 @@ function MapWrapper() {
 
   return (
     <StMapContainer>
+      <SearchBar />
       <StMap // 지도를 표시할 Container
         center={{ lat: 36.29676871972202, lng: 127.82474726979814 }}
         isPanto={true}
