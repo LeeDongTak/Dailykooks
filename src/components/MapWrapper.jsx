@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import useMarkerFromFirebase from '../hooks/useMarkerFromFirebase';
 import { setHoveredMarker, setSelectedMarker } from '../redux/modules/markerSlice';
+import SearchBar from './SearchBar';
 
 function MapWrapper() {
   const { kakao } = window;
@@ -42,6 +43,7 @@ function MapWrapper() {
 
   return (
     <StMapContainer>
+      <SearchBar />
       <StMap // 지도를 표시할 Container
         center={{ lat: 36.29676871972202, lng: 127.82474726979814 }}
         isPanto={true}

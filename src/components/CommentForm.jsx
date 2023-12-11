@@ -36,7 +36,7 @@ function CommentForm({ currentMarker }) {
       nickname,
       password,
       content,
-      createdAt: dayjs().format('YYYY년 MM월 DD일 hh:mm'),
+      createdAt: dayjs().toJSON(),
       postId: currentMarker.id
     };
     console.log(newComment);

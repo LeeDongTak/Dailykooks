@@ -34,13 +34,15 @@ function Comment({ comment }) {
   };
 
   const onEditBtnClickHandler = () => {
-    const data = {
-      updateContent: { content: updateValue, editedAt: dayjs().format('YYYY년 MM월 DD일 hh:mm') },
-      commentId: comment.commentId
-    };
+    if (window.confirm('정말 삭제하시겠습니까?')) {
+      const data = {
+        updateContent: { content: updateValue, editedAt: dayjs().format('YYYY년 MM월 DD일 hh:mm') },
+        commentId: comment.commentId
+      };
 
-    updateMutation.mutate(data);
-    setIsEditMode(false);
+      updateMutation.mutate(data);
+      setIsEditMode(false);
+    }
   };
 
   const onDeleteBtnClickHandler = () => {
@@ -60,7 +62,7 @@ function Comment({ comment }) {
 
   return (
     <StCommentContainer>
-      <p>{comment.createdAt}</p>
+      <p>{dayjs(comment.createdAt).format('YYYY년 MM월 DD일 hh:mm')}</p>
       <StCommentContentContainer>
         <h3>{comment.nickname}</h3>
         {isEditMode ? (
@@ -95,7 +97,7 @@ export default Comment;
 
 const StCommentContainer = styled.div`
   width: 900px;
-  padding-bottom: 72px;
+  margin-bottom: 12px;
   & > p {
     text-align: end;
     font-size: 0.7rem;

@@ -17,11 +17,13 @@ function CommentsList({ currentMarker }) {
   return (
     <StCommentsListWrapper>
       <ul>
-        {comments?.map((comment) => (
-          <li key={comment.commentId}>
-            <Comment comment={comment} />
-          </li>
-        ))}
+        {comments
+          ?.sort((a, b) => b.createdAt - a.createdAt)
+          .map((comment) => (
+            <li key={comment.commentId}>
+              <Comment comment={comment} />
+            </li>
+          ))}
       </ul>
     </StCommentsListWrapper>
   );
@@ -31,6 +33,7 @@ export default CommentsList;
 
 const StCommentsListWrapper = styled.section`
   margin: 0 auto;
+  padding-bottom: 72px;
   width: 900px;
   background-color: #eee;
 `;
