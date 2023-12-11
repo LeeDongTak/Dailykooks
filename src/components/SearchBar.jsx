@@ -27,7 +27,6 @@ function SearchBar() {
     refetch({ queryKey: ['firebase/places', searchAddress] });
     // refetch({ queryKey: ['kakao/places', { kakao, searchAddress }] });
   };
-  console.log(searchAddress);
 
   return (
     <StSearchBarContainer>

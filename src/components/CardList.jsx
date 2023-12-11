@@ -14,7 +14,6 @@ function CardList() {
   const { markersFromFirebase: markers } = useMarkerFromFirebase(searchAddress);
   const { selectedMarker } = useSelector((state) => state.marker);
 
-  console.log(isFiltered);
   return (
     <StCardListContainer>
       <CardFilter />

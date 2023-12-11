@@ -8,18 +8,15 @@ export const getComments = async (postId) => {
   querySnapshot.forEach((doc) => {
     data.push({ commentId: doc.id, ...doc.data() });
   });
-  console.log(data);
   return data;
 };
 
 export const addComment = async (comment) => {
-  console.log(comment);
   await addDoc(collection(db, 'comments'), comment);
 };
 
 export const updateComment = async (data) => {
   const { commentId, updateContent } = data;
-  console.log(data);
   const docRef = doc(db, 'comments', commentId);
   await updateDoc(docRef, updateContent);
 };

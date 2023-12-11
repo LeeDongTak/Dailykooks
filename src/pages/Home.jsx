@@ -15,13 +15,6 @@ function Home() {
   if (isLoadingFromFirebase) {
     return <h1> 로딩 중... </h1>;
   }
-  console.log(markers);
-
-  // console.log('data from firebase : ');
-  // console.log('---------------');
-  // console.log('data from kakaomap search : ');
-
-  console.log(markers);
 
   return (
     <StHomeContainer>
