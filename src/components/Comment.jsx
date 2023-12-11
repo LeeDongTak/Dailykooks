@@ -69,7 +69,7 @@ function Comment({ comment }) {
           <textarea
             value={updateValue}
             id="contents"
-            placeholder="200자 이내의 내용을 입력해주세요"
+            placeholder="200자 이내의 내용을 입력해주세요."
             maxLength={200}
             rows={2}
             onChange={onEditContentChangeHandler}
@@ -97,28 +97,75 @@ export default Comment;
 
 const StCommentContainer = styled.div`
   width: 900px;
-  margin-bottom: 12px;
+  box-shadow: 2px 2px 6px #aaa;
+  border-radius: 8px;
+  margin: 30px 0px;
+  background-color: #fff;
+  position: relative;
+  p {
+    //background-color: yellowgreen;
+    padding: 30px 10px;
+    width: 900px;
+  }
   & > p {
     text-align: end;
-    font-size: 0.7rem;
+    font-size: 0.8rem;
+    box-sizing: border-box;
+    padding: 10px 10px 0px 10px;
+    position: absolute;
+    right: 0;
+    top: 2px;
+  }
+  button {
+    background-color: #de754c;
+    padding: 10px 15px;
+    border: none;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    margin: 10px 10px;
+    text-align: end;
+    &:hover {
+      background-color: #eee;
+      color: #333;
+    }
   }
 `;
 
 const StCommentContentContainer = styled.div`
   width: 100%;
   display: flex;
+  flex-wrap: wrap;
   justify-content: start;
   align-items: center;
-  gap: 24px;
+
   h3 {
-    width: 30%;
+    width: 100%;
+    padding: 10px 10px;
+    font-weight: bold;
+    font-size: 1rem;
+    background-color: #dbc8b6;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
   }
   textarea {
-    width: 70%;
+    width: 860px;
     flex-shrink: 1;
+    outline: none;
+    font-family: inherit;
+    box-sizing: border-box;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    resize: none;
+    padding: 10px 10px;
+    border-radius: 5px;
+    margin: 10px;
   }
 `;
 
 const StBtnContainer = styled.div`
-  background-color: #ddd;
+  //background-color: #ddd;
+  display: flex;
+  justify-content: flex-end;
 `;

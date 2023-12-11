@@ -91,17 +91,23 @@ const StFormWrapper = styled.div`
   padding: 12px;
   box-sizing: border-box;
   background-color: #dbc8b6;
+
   border-radius: 18px;
 
   button {
     display: block;
     margin: 0 auto;
-    padding: 12px;
-    border-radius: 12px;
+    padding: 12px 20px;
+    border-radius: 10px;
     border: none;
     cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+    background-color: #de754c;
     &:hover {
-      background-color: #ddd;
+      background-color: #eee;
+      color: #333;
     }
   }
 `;
@@ -129,11 +135,19 @@ const StWriterInfo = styled.div`
     background-color: #eee5dd;
   }
   label {
-    font-size: 0.8rem;
+    font-size: 1rem;
   }
   input {
     width: 300px;
-    padding: 6px;
+    padding: 10px;
+    outline: none;
+    font-size: 1rem;
+    border-radius: 5px;
+    font-family: inherit;
+    border: none;
+    &::placeholder {
+      color: #ccc;
+    }
   }
 `;
 
@@ -150,11 +164,20 @@ const StTextareaWrapper = styled.div`
     font-size: 0.8rem;
     display: block;
     padding-bottom: 12px;
+    font-size: 1rem;
   }
   textarea {
     box-sizing: border-box;
     width: 91%;
     resize: none;
-    padding: 6px;
+    font-size: 1rem;
+    padding: 10px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    font-family: inherit;
+    &::placeholder {
+      color: #ccc;
+    }
   }
 `;

@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import useMarkerFromFirebase from '../hooks/useMarkerFromFirebase';
 import { setHoveredMarker, setSelectedMarker } from '../redux/modules/markerSlice';
 import SearchBar from './SearchBar';
-
 function MapWrapper() {
   const { kakao } = window;
   const mapRef = useRef(null);
