@@ -56,26 +56,6 @@
  ┃ ┣ 📜comments.js
  ┃ ┗ 📜places.js
  ┣ 📂assets
- ┃ ┣ 📜bag.svg
- ┃ ┣ 📜bag2.svg
- ┃ ┣ 📜bg.png
- ┃ ┣ 📜bg2.png
- ┃ ┣ 📜bowl.svg
- ┃ ┣ 📜clock.svg
- ┃ ┣ 📜finder.svg
- ┃ ┣ 📜food.jpg
- ┃ ┣ 📜location.svg
- ┃ ┣ 📜location_icon.svg
- ┃ ┣ 📜logo.svg
- ┃ ┣ 📜menu.svg
- ┃ ┣ 📜menu2.svg
- ┃ ┣ 📜motersycle2.svg
- ┃ ┣ 📜motorcycle.svg
- ┃ ┣ 📜motorsycle2.svg
- ┃ ┣ 📜phone.svg
- ┃ ┣ 📜spoon.svg
- ┃ ┣ 📜star-regular.svg
- ┃ ┗ 📜star2.svg
  ┣ 📂components
  ┃ ┣ 📜Card.jsx
  ┃ ┣ 📜CardFilter.jsx
