@@ -1,40 +1,43 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StaticMap } from 'react-kakao-maps-sdk';
-import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import clock from '../assets/clock.svg';
 import location from '../assets/location_icon.svg';
 import menu2 from '../assets/menu.svg';
 import phone from '../assets/phone.svg';
 import star from '../assets/star2.svg';
+import CommentForm from '../components/CommentForm';
 import CommentsList from '../components/CommentsList';
-function Detail() {
-  const { selectedMarker } = useSelector((state) => state.marker);
-  const { id } = useParams();
 
-  // console.log(selectedMarker);
-  if (!selectedMarker) {
-    return <p>페이지를 찾을수 없습니다.</p>;
-  }
+function Detail() {
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const currentMarker = JSON.parse(localStorage.getItem('selectedMarker'));
+
+  useEffect(() => {
+    if (!currentMarker) {
+      navigate('/');
+    }
+  }, []);
   //console.log(selectedMarker);
 
   //지도 위치 설정
-  const xLoc = Number(selectedMarker.x);
-  const yLoc = Number(selectedMarker.y);
+  const xLoc = Number(currentMarker.x);
+  const yLoc = Number(currentMarker.y);
 
-  console.log(selectedMarker.vote);
-  console.log(selectedMarker.menus);
+  console.log(currentMarker.vote);
+  console.log(currentMarker.menus);
   return (
     <DetailPage>
       <DetailBox>
-        <h1>[ {selectedMarker.place_name} ]</h1>
+        <h1>[ {currentMarker.place_name} ]</h1>
 
         <InfoBoxFrame>
           <InfoBox>
             <p>
               <img src={location} />
-              {selectedMarker.road_address_name}
+              {currentMarker.road_address_name}
             </p>
             <hr />
             <p>
@@ -44,13 +47,13 @@ function Detail() {
             <hr />
             <p>
               <img src={phone} />
-              {selectedMarker.phone}
+              {currentMarker.phone}
             </p>
             <hr />
-            {selectedMarker.vote !== undefined ? (
+            {currentMarker.vote !== undefined ? (
               <p>
                 <img src={star} alt="" />
-                {selectedMarker?.vote}
+                {currentMarker?.vote}
               </p>
             ) : (
               <p>
@@ -64,8 +67,8 @@ function Detail() {
               메뉴
             </MenuTitle>
             <ul>
-              {selectedMarker.menus ? (
-                selectedMarker.menus.map((menu, index) => (
+              {currentMarker.menus ? (
+                currentMarker.menus.map((menu, index) => (
                   <li key={index}>
                     <table>
                       <tbody>
@@ -91,7 +94,7 @@ function Detail() {
             style={{
               // 지도의 크기
               width: '500px',
-              height: '500px'
+              height: '596px'
             }}
             marker={{
               lat: yLoc,
@@ -101,7 +104,8 @@ function Detail() {
           />
         </InfoBoxFrame>
       </DetailBox>
-      <CommentsList markerId={selectedMarker.id} />
+      <CommentForm currentMarker={currentMarker} />
+      <CommentsList currentMarker={currentMarker} />
     </DetailPage>
   );
 }

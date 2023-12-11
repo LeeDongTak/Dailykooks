@@ -1,60 +1,15 @@
-function useFilterMarkers(markers, filter) {
-  let filteredMarkers;
-  const markersFilteredByVote = [
-    {
-      vote: 5,
-      places: []
-    },
-    {
-      vote: 4.5,
-      places: []
-    },
-    {
-      vote: 4,
-      places: []
-    },
-    {
-      vote: 3.5,
-      places: []
-    },
-    {
-      vote: 3,
-      places: []
-    },
-    {
-      vote: 2.5,
-      places: []
-    },
-    {
-      vote: 2,
-      places: []
-    },
-    {
-      vote: 1.5,
-      places: []
-    },
-    {
-      vote: 1,
-      places: []
-    }
-  ];
+import { markersFilteredByLocation, markersFilteredByVote } from '../data/filterArrays';
 
-  markers.forEach((marker) => {
-    for (let i = 0; i < markersFilteredByVote.length; i++) {
-      if (marker.vote <= markersFilteredByVote[i].vote && marker.vote >= markersFilteredByVote[i + 1].vote)
-        markersFilteredByVote[i].places.push({ ...marker });
-    }
-  });
+function useFilterMarkers(markers, filter) {
+  let filteredMarkers = [];
 
   switch (filter) {
-    case 'vote':
-      filteredMarkers = markersFilteredByVote;
+    case '평점':
+      filteredMarkers = filterByVote(markersFilteredByVote, markers);
       break;
-    case 'price range':
+    case '지역':
+      filteredMarkers = filterByLocation(markersFilteredByLocation, markers);
       break;
-    case 'loation':
-      break;
-
     default:
       filteredMarkers = [...markers];
       break;
@@ -64,3 +19,22 @@ function useFilterMarkers(markers, filter) {
 }
 
 export default useFilterMarkers;
+
+const filterByVote = (filterArray, markers) => {
+  markers.forEach((marker) => {
+    for (let i = 0; i < filterArray.length; i++) {
+      if (marker.vote <= filterArray[i].vote && marker.vote > filterArray[i + 1].vote)
+        filterArray[i].places.push({ ...marker });
+    }
+  });
+  return filterArray;
+};
+
+const filterByLocation = (filterArray, markers) => {
+  markers.forEach((marker) => {
+    for (let i = 0; i < filterArray.length; i++) {
+      if (marker.road_address_name.slice(0, 2) === filterArray[i].location) filterArray[i].places.push({ ...marker });
+    }
+  });
+  return filterArray;
+};

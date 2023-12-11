@@ -1,15 +1,13 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import useMarker from '../hooks/useMarker';
 import { setFilter, setIsFiltered } from '../redux/modules/filterSlice';
 
-const filterCriteria = ['location', 'price range', 'vote'];
+const filterCriteria = ['지역', '평점'];
 
 function CardFilter() {
   const { kakao } = window;
   const { searchAddress } = useSelector((state) => state.search);
-  const { markers } = useMarker({ kakao, searchAddress });
   const { isFiltered } = useSelector((state) => state.filter);
   const dispatch = useDispatch();
 
@@ -39,7 +37,7 @@ function CardFilter() {
 export default CardFilter;
 
 const StFilterBtnContainer = styled.div`
-  width: 80%;
+  width: 50%;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -57,6 +55,8 @@ const StFilterBtn = styled.button`
   border-radius: 8px;
   border: none;
   cursor: pointer;
+  /* font-weight: 900; */
+  font-size: 1.2rem;
   &:hover {
     background-color: #eee;
   }

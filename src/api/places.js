@@ -1,4 +1,4 @@
-import { collection, getDocs, query, where } from '@firebase/firestore';
+import { collection, getDocs, query } from '@firebase/firestore';
 import { db } from '../firebase';
 
 export const getPlaces = async () => {
@@ -8,13 +8,15 @@ export const getPlaces = async () => {
 };
 
 export const getPlacesWithSearchText = async (queryText) => {
-  const placeQuery = query(
-    collection(db, 'places'),
-    where('place_name', '>=', queryText),
-    where('place_name', '<=', queryText + '\uf8ff')
-  );
+  const placeQuery = query(collection(db, 'places'));
   const querySnapShot = await getDocs(placeQuery);
 
-  const data = querySnapShot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  const rawData = querySnapShot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  const data = rawData.filter(
+    (item) =>
+      item.road_address_name.includes(queryText) ||
+      item.place_name.includes(queryText) ||
+      item.menus.map((menu) => menu.name).includes(queryText)
+  );
   return data;
 };

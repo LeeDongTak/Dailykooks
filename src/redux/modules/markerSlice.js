@@ -18,10 +18,9 @@ const markerSlice = createSlice({
     },
     setSelectedMarker: (state, action) => {
       const { markers, id } = action.payload;
-      // console.log(markers);
       const marker = markers.find((item) => item?.id === id);
       state.selectedMarker = marker;
-      // console.log(state.selectedMarker);
+      localStorage.setItem('selectedMarker', JSON.stringify(marker));
     }
   }
 });

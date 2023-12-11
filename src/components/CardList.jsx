@@ -13,18 +13,10 @@ function CardList() {
   // const { markers } = useMarker({ kakao, searchAddress });
   const { markersFromFirebase: markers } = useMarkerFromFirebase(searchAddress);
   const { selectedMarker } = useSelector((state) => state.marker);
-  console.log(isFiltered);
+
   return (
     <StCardListContainer>
       <CardFilter />
-      {markers
-        ?.filter((item) => item.id === selectedMarker.id)
-        ?.map((item) => (
-          <div key={item.id}>
-            <p>{item.id}</p>
-            <p>{item.place_name}</p>
-          </div>
-        ))}
       {isFiltered ? (
         <FilteredCardList markers={markers} />
       ) : (
